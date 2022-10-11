@@ -1,0 +1,23 @@
+syntax = "proto3";
+package keeper;
+
+option go_package = "github.com/hagit4/goph-keeper";
+
+message RegisterRequest {
+    string username = 1;
+    string passHash = 2;
+}
+
+message RegisterResponse {}
+
+message LoginRequest {
+    string username = 1;
+    string passHash = 2;
+}
+
+message LoginResponse {}
+
+service Auth {
+    rpc Register (RegisterRequest) returns (RegisterResponse) {}
+    rpc Login (LoginRequest) returns (LoginResponse) {}
+}

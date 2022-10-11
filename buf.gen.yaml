@@ -1,0 +1,8 @@
+version: v1
+plugins:
+  - name: go
+    out: pkg/pb
+    opt: module=github.com/hagit4
+  - name: go-grpc
+    out: pkg/pb
+    opt: module=github.com/hagit4
