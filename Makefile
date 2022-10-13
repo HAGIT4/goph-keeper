@@ -5,3 +5,6 @@ run-goose-migrations:
 	export GOOSE_DRIVER=postgres
 	export GOOSE_DBSTRING="user=keeper_user password=password host=127.0.0.1 dbname=keeper sslmode=disable"
 	goose up
+
+generate-pb:
+	buf generate

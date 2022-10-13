@@ -3,10 +3,13 @@ package server
 import (
 	"net"
 
+	"github.com/hagit4/goph-keeper/internal/keeper/config"
 	keeperGRCP "github.com/hagit4/goph-keeper/internal/keeper/grpc"
 	"github.com/hagit4/goph-keeper/internal/keeper/service"
 	"github.com/hagit4/goph-keeper/internal/keeper/storage"
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 )
 
@@ -19,7 +22,18 @@ type keeperServer struct {
 }
 
 func NewKeeperServer() (keeper *keeperServer, err error) {
-	storage := storage.NewKeeperPostgresStorage()
+	config, err := config.InitKeeperConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := sqlx.Connect("postgres", config.DbString)
+	if err != nil {
+		return nil, err
+	}
+	storage := storage.NewKeeperPostgresStorage(
+		storage.WithConnection(db),
+	)
 
 	service := service.NewKeeperService(
 		service.WithStorage(storage),

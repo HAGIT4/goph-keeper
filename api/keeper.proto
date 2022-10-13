@@ -8,14 +8,18 @@ message RegisterRequest {
     string passHash = 2;
 }
 
-message RegisterResponse {}
+message RegisterResponse {
+    string username = 1 ;
+}
 
 message LoginRequest {
     string username = 1;
     string passHash = 2;
 }
 
-message LoginResponse {}
+message LoginResponse {
+    string accessToken = 1;
+}
 
 service Auth {
     rpc Register (RegisterRequest) returns (RegisterResponse) {}

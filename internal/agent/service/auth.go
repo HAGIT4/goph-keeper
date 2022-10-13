@@ -26,10 +26,11 @@ func (as *agentService) RegisterUser(ctx context.Context) (err error) {
 		Username: username,
 		PassHash: passwordHash,
 	}
-	_, err = as.agentGRPC.RegisterUser(ctx, grpcReq)
+	grpcResp, err := as.agentGRPC.RegisterUser(ctx, grpcReq)
 	if err != nil {
 		return err
 	}
+	fmt.Println(grpcResp.Username)
 	return nil
 }
 
