@@ -2,6 +2,7 @@ package grcp
 
 import (
 	"context"
+	"fmt"
 
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
 )
@@ -15,9 +16,11 @@ func (ag *agentGRPC) RegisterUser(ctx context.Context, req *pb.RegisterRequest) 
 }
 
 func (ag *agentGRPC) Login(ctx context.Context, req *pb.LoginRequest) (resp *pb.LoginResponse, err error) {
+	fmt.Println("req:", req)
 	resp, err = ag.authClient.Login(ctx, req)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("resp:", resp)
 	return resp, nil
 }

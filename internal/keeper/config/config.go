@@ -7,6 +7,7 @@ import (
 type KeeperConfig struct {
 	KeeperAddress string `mapstructure:"server_adddress"`
 	DbString      string `mapstructure:"db_string"`
+	SymmKey       string `mapstructure:"symmkey"`
 }
 
 func InitKeeperConfig() (config *KeeperConfig, err error) {

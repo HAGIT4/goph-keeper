@@ -6,7 +6,7 @@ import (
 	"github.com/hagit4/goph-keeper/internal/keeper/config"
 	keeperGRCP "github.com/hagit4/goph-keeper/internal/keeper/grpc"
 	"github.com/hagit4/goph-keeper/internal/keeper/service"
-	"github.com/hagit4/goph-keeper/internal/keeper/storage"
+	"github.com/hagit4/goph-keeper/internal/keeper/storage/postgres"
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -31,12 +31,18 @@ func NewKeeperServer() (keeper *keeperServer, err error) {
 	if err != nil {
 		return nil, err
 	}
-	storage := storage.NewKeeperPostgresStorage(
-		storage.WithConnection(db),
+	storage := postgres.NewKeeperPostgresStorage(
+		postgres.WithConnection(db),
 	)
+
+	tm, err := service.NewTokenMaker(config.SymmKey)
+	if err != nil {
+		return nil, err
+	}
 
 	service := service.NewKeeperService(
 		service.WithStorage(storage),
+		service.WithTokenMaker(tm),
 	)
 
 	grpcService := keeperGRCP.NewServerGrpc(

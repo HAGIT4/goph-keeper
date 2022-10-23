@@ -8,23 +8,34 @@ import (
 
 type KeeperStorageInterface interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (resp *CreateUserResp, err error)
-	ReadUser(ctx context.Context, Req *ReadUserReq) (resp *ReadUserResp, err error)
+	ReadUser(ctx context.Context, req *ReadUserReq) (resp *ReadUserResp, err error)
+	ReadUserByUsername(ctx context.Context, req *ReadUserByUsernameReq) (resp *ReadUserByUsernameResp, err error)
 }
 
-var _ KeeperStorageInterface = (*keeperPostgresStorage)(nil)
+type User struct {
+	ID       uuid.UUID `db:"id"`
+	Username string    `db:"username"`
+	Passhash string    `db:"passhash"`
+}
 
 type CreateUserReq struct {
-	Username string
-	Passhash string
+	User
 }
 type CreateUserResp struct {
 	Username string `db:"username"`
 }
 
 type ReadUserReq struct {
-	id uuid.UUID
+	ID uuid.UUID
 }
 type ReadUserResp struct {
-	Username string `db:"username"`
-	PassHash string `db:"passhash"`
+	User
+}
+
+type ReadUserByUsernameReq struct {
+	Username string
+}
+
+type ReadUserByUsernameResp struct {
+	User
 }

@@ -5,23 +5,74 @@ option go_package = "github.com/hagit4/goph-keeper";
 
 message RegisterRequest {
     string username = 1;
-    string passHash = 2;
+    string password = 2;
 }
 
 message RegisterResponse {
-    string username = 1 ;
+    string username = 2;
 }
 
 message LoginRequest {
     string username = 1;
-    string passHash = 2;
+    string password = 2;
 }
 
 message LoginResponse {
-    string accessToken = 1;
+    string accessToken = 2;
 }
 
 service Auth {
     rpc Register (RegisterRequest) returns (RegisterResponse) {}
     rpc Login (LoginRequest) returns (LoginResponse) {}
+}
+
+message SaveLoginPassRequest {
+    string encKey = 1;
+    string encPassword = 2;
+    string encMeta = 3;
+}
+
+message SaveLoginPassResponse {
+    string encKey = 1;
+}
+
+message GetLoginPassRequest {
+    string encKey = 1;
+}
+
+message GetLoginPassResponse {
+    string encKey = 1;
+    string encPassword = 2;
+    string encMeta = 3;
+}
+
+service LoginPassKeeper {
+    rpc SaveLoginPass (SaveLoginPassRequest) returns (SaveLoginPassResponse) {}
+    rpc GetLoginPass (GetLoginPassRequest) returns (GetLoginPassResponse) {}
+}
+
+message SaveTextRequest {
+    string encKey = 1;
+    string encText = 2;
+    string encMeta = 3;
+}
+
+message SaveTextResponse {
+    string encKey = 1;
+
+}
+
+message GetTextRequest {
+    string encKey = 1;
+}
+
+message GetTextResponse {
+    string encKey = 1;
+    string encText = 2;
+    string encMeta = 3;
+}
+
+service TextKeeper {
+    rpc SaveText (SaveTextRequest) returns (SaveTextResponse) {}
+    rpc GetText (GetTextRequest) returns (GetTextResponse) {} 
 }

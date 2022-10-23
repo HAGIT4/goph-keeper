@@ -1,2 +1,3 @@
 keeper_address: "localhost:3200"
 db_string: "postgresql://localhost:5432/keeper?user=keeper_user&password=password&sslmode=disable"
+symmkey: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
