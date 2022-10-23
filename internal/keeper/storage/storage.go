@@ -39,3 +39,44 @@ type ReadUserByUsernameReq struct {
 type ReadUserByUsernameResp struct {
 	User
 }
+
+type LoginPass struct {
+	ID       uuid.UUID `db:"uuid"`
+	UserID   uuid.UUID `db:"user_id"`
+	Keyword  string    `db:"keyword"`
+	Login    string    `db:"login"`
+	Password string    `db:"password"`
+	Meta     string    `db:"meta"`
+}
+
+type CreateLoginPassReq struct {
+	LoginPass
+}
+
+type CreateLoginPassResp struct{}
+
+type ReadLoginPassByIDreq struct {
+	UserID uuid.UUID `db:"user_id"`
+	ID     uuid.UUID `db:"uuid"`
+}
+
+type ReadLoginPassByIDresp struct {
+	LoginPass
+}
+
+type ReadLoginPassByKeywordReq struct {
+	UserID  uuid.UUID `db:"user_id"`
+	Keyword string    `db:"keyword"`
+}
+
+type ReadLoginPassByKeywordResp struct {
+	LoginPass
+}
+
+type UpdateLoginByIDreq struct {
+	UserID uuid.UUID `db:"user_id"`
+	ID     uuid.UUID `db:"id"`
+	Login  string    `db:"login"`
+}
+
+type UpdateLoginByIDresp struct{}
