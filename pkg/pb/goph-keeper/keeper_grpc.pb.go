@@ -139,3 +139,247 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "keeper.proto",
 }
+
+// LoginPassKeeperClient is the client API for LoginPassKeeper service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type LoginPassKeeperClient interface {
+	SaveLoginPass(ctx context.Context, in *SaveLoginPassRequest, opts ...grpc.CallOption) (*SaveLoginPassResponse, error)
+	GetLoginPass(ctx context.Context, in *GetLoginPassRequest, opts ...grpc.CallOption) (*GetLoginPassResponse, error)
+}
+
+type loginPassKeeperClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewLoginPassKeeperClient(cc grpc.ClientConnInterface) LoginPassKeeperClient {
+	return &loginPassKeeperClient{cc}
+}
+
+func (c *loginPassKeeperClient) SaveLoginPass(ctx context.Context, in *SaveLoginPassRequest, opts ...grpc.CallOption) (*SaveLoginPassResponse, error) {
+	out := new(SaveLoginPassResponse)
+	err := c.cc.Invoke(ctx, "/keeper.LoginPassKeeper/SaveLoginPass", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *loginPassKeeperClient) GetLoginPass(ctx context.Context, in *GetLoginPassRequest, opts ...grpc.CallOption) (*GetLoginPassResponse, error) {
+	out := new(GetLoginPassResponse)
+	err := c.cc.Invoke(ctx, "/keeper.LoginPassKeeper/GetLoginPass", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// LoginPassKeeperServer is the server API for LoginPassKeeper service.
+// All implementations must embed UnimplementedLoginPassKeeperServer
+// for forward compatibility
+type LoginPassKeeperServer interface {
+	SaveLoginPass(context.Context, *SaveLoginPassRequest) (*SaveLoginPassResponse, error)
+	GetLoginPass(context.Context, *GetLoginPassRequest) (*GetLoginPassResponse, error)
+	mustEmbedUnimplementedLoginPassKeeperServer()
+}
+
+// UnimplementedLoginPassKeeperServer must be embedded to have forward compatible implementations.
+type UnimplementedLoginPassKeeperServer struct {
+}
+
+func (UnimplementedLoginPassKeeperServer) SaveLoginPass(context.Context, *SaveLoginPassRequest) (*SaveLoginPassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveLoginPass not implemented")
+}
+func (UnimplementedLoginPassKeeperServer) GetLoginPass(context.Context, *GetLoginPassRequest) (*GetLoginPassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLoginPass not implemented")
+}
+func (UnimplementedLoginPassKeeperServer) mustEmbedUnimplementedLoginPassKeeperServer() {}
+
+// UnsafeLoginPassKeeperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LoginPassKeeperServer will
+// result in compilation errors.
+type UnsafeLoginPassKeeperServer interface {
+	mustEmbedUnimplementedLoginPassKeeperServer()
+}
+
+func RegisterLoginPassKeeperServer(s grpc.ServiceRegistrar, srv LoginPassKeeperServer) {
+	s.RegisterService(&LoginPassKeeper_ServiceDesc, srv)
+}
+
+func _LoginPassKeeper_SaveLoginPass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveLoginPassRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoginPassKeeperServer).SaveLoginPass(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.LoginPassKeeper/SaveLoginPass",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoginPassKeeperServer).SaveLoginPass(ctx, req.(*SaveLoginPassRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LoginPassKeeper_GetLoginPass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLoginPassRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoginPassKeeperServer).GetLoginPass(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.LoginPassKeeper/GetLoginPass",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoginPassKeeperServer).GetLoginPass(ctx, req.(*GetLoginPassRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// LoginPassKeeper_ServiceDesc is the grpc.ServiceDesc for LoginPassKeeper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var LoginPassKeeper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "keeper.LoginPassKeeper",
+	HandlerType: (*LoginPassKeeperServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SaveLoginPass",
+			Handler:    _LoginPassKeeper_SaveLoginPass_Handler,
+		},
+		{
+			MethodName: "GetLoginPass",
+			Handler:    _LoginPassKeeper_GetLoginPass_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "keeper.proto",
+}
+
+// TextKeeperClient is the client API for TextKeeper service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TextKeeperClient interface {
+	SaveText(ctx context.Context, in *SaveTextRequest, opts ...grpc.CallOption) (*SaveTextResponse, error)
+	GetText(ctx context.Context, in *GetTextRequest, opts ...grpc.CallOption) (*GetTextResponse, error)
+}
+
+type textKeeperClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTextKeeperClient(cc grpc.ClientConnInterface) TextKeeperClient {
+	return &textKeeperClient{cc}
+}
+
+func (c *textKeeperClient) SaveText(ctx context.Context, in *SaveTextRequest, opts ...grpc.CallOption) (*SaveTextResponse, error) {
+	out := new(SaveTextResponse)
+	err := c.cc.Invoke(ctx, "/keeper.TextKeeper/SaveText", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *textKeeperClient) GetText(ctx context.Context, in *GetTextRequest, opts ...grpc.CallOption) (*GetTextResponse, error) {
+	out := new(GetTextResponse)
+	err := c.cc.Invoke(ctx, "/keeper.TextKeeper/GetText", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TextKeeperServer is the server API for TextKeeper service.
+// All implementations must embed UnimplementedTextKeeperServer
+// for forward compatibility
+type TextKeeperServer interface {
+	SaveText(context.Context, *SaveTextRequest) (*SaveTextResponse, error)
+	GetText(context.Context, *GetTextRequest) (*GetTextResponse, error)
+	mustEmbedUnimplementedTextKeeperServer()
+}
+
+// UnimplementedTextKeeperServer must be embedded to have forward compatible implementations.
+type UnimplementedTextKeeperServer struct {
+}
+
+func (UnimplementedTextKeeperServer) SaveText(context.Context, *SaveTextRequest) (*SaveTextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveText not implemented")
+}
+func (UnimplementedTextKeeperServer) GetText(context.Context, *GetTextRequest) (*GetTextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetText not implemented")
+}
+func (UnimplementedTextKeeperServer) mustEmbedUnimplementedTextKeeperServer() {}
+
+// UnsafeTextKeeperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TextKeeperServer will
+// result in compilation errors.
+type UnsafeTextKeeperServer interface {
+	mustEmbedUnimplementedTextKeeperServer()
+}
+
+func RegisterTextKeeperServer(s grpc.ServiceRegistrar, srv TextKeeperServer) {
+	s.RegisterService(&TextKeeper_ServiceDesc, srv)
+}
+
+func _TextKeeper_SaveText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveTextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TextKeeperServer).SaveText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.TextKeeper/SaveText",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TextKeeperServer).SaveText(ctx, req.(*SaveTextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TextKeeper_GetText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TextKeeperServer).GetText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.TextKeeper/GetText",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TextKeeperServer).GetText(ctx, req.(*GetTextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TextKeeper_ServiceDesc is the grpc.ServiceDesc for TextKeeper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TextKeeper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "keeper.TextKeeper",
+	HandlerType: (*TextKeeperServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SaveText",
+			Handler:    _TextKeeper_SaveText_Handler,
+		},
+		{
+			MethodName: "GetText",
+			Handler:    _TextKeeper_GetText_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "keeper.proto",
+}

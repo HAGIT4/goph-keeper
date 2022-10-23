@@ -27,23 +27,25 @@ service Auth {
 }
 
 message SaveLoginPassRequest {
-    string encKey = 1;
-    string encPassword = 2;
-    string encMeta = 3;
+    string encKeyword = 1;
+    string encLogin = 2;
+    string encPassword = 3;
+    string encMeta = 4;
 }
 
 message SaveLoginPassResponse {
-    string encKey = 1;
+    string encKeyword = 1;
 }
 
 message GetLoginPassRequest {
-    string encKey = 1;
+    string encKeyword = 1;
 }
 
 message GetLoginPassResponse {
-    string encKey = 1;
-    string encPassword = 2;
-    string encMeta = 3;
+    string encKeyword = 1;
+    string encLogin = 2;
+    string encPassword = 3;
+    string encMeta = 4;
 }
 
 service LoginPassKeeper {
@@ -52,22 +54,22 @@ service LoginPassKeeper {
 }
 
 message SaveTextRequest {
-    string encKey = 1;
+    string encKeyword = 1;
     string encText = 2;
     string encMeta = 3;
 }
 
 message SaveTextResponse {
-    string encKey = 1;
+    string encKeyword = 1;
 
 }
 
 message GetTextRequest {
-    string encKey = 1;
+    string encKeyword = 1;
 }
 
 message GetTextResponse {
-    string encKey = 1;
+    string encKeyword = 1;
     string encText = 2;
     string encMeta = 3;
 }

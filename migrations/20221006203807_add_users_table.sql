@@ -10,6 +10,21 @@ CREATE TABLE keeper.user (
     passhash VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE keeper.loginpass (
+    id UUID PRIMARY KEY,
+    keyword VARCHAR(255) NOT NULL UNIQUE,
+    login VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    meta TEXT
+)
+
+CREATE TABLE keeper.text (
+    id UUID PRIMARY KEY,
+    keyword VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
+    meta TEXT
+)
+
 -- +goose Down
 -- +goose StatementBegin
 SELECT 'down SQL query';
