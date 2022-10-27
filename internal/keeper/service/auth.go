@@ -8,11 +8,6 @@ import (
 
 	"github.com/hagit4/goph-keeper/internal/keeper/storage"
 	"golang.org/x/crypto/argon2"
-	"golang.org/x/crypto/bcrypt"
-)
-
-var (
-	bcryptCost = bcrypt.DefaultCost
 )
 
 type RegisterUserReq struct {
@@ -86,4 +81,8 @@ func checkPassword(storedSaltedPassHash []byte, plainPass string) bool {
 	salt := storedSaltedPassHash[0:8]
 	userSaltedPassHash := hashPassword(plainPass, salt)
 	return bytes.Equal(userSaltedPassHash, storedSaltedPassHash)
+}
+
+func (ks *keeperService) VerifyAuthToken(token string) (payload *AuthTokenPayload, err error) {
+	return ks.tokenMaker.VerifyAuthToken(token)
 }

@@ -9,6 +9,7 @@ import (
 type KeeperServiceInterface interface {
 	RegisterUser(ctx context.Context, req *RegisterUserReq) (resp *RegisterUserResp, err error)
 	Login(ctx context.Context, req *LoginUserReq) (resp *LoginUserResp, err error)
+	VerifyAuthToken(token string) (payload *AuthTokenPayload, err error)
 }
 
 type keeperService struct {

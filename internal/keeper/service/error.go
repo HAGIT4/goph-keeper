@@ -17,3 +17,9 @@ type ErrorUserNotRegistered struct{}
 func (err *ErrorUserNotRegistered) Error() string {
 	return "User not registered"
 }
+
+type ErrorTokenExpired struct{}
+
+func (err *ErrorTokenExpired) Error() string {
+	return "Token expired"
+}

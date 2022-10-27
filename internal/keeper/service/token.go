@@ -22,6 +22,13 @@ type AuthTokenPayload struct {
 	ExpiredAt time.Time `json:"expired_at"`
 }
 
+func (p *AuthTokenPayload) Valid() error {
+	if time.Now().After(p.ExpiredAt) {
+		return &ErrorTokenExpired{}
+	}
+	return nil
+}
+
 func NewTokenPayload(username string) (payload *AuthTokenPayload, err error) {
 	tokenID, err := uuid.NewRandom()
 	if err != nil {
@@ -65,15 +72,11 @@ func (m *TokenMaker) CreateAuthToken(username string) (token string, err error) 
 func (m *TokenMaker) VerifyAuthToken(token string) (payload *AuthTokenPayload, err error) {
 	payload = &AuthTokenPayload{}
 
-	err = m.paseto.Decrypt(token, m.symmKey, payload, nil)
-	if err != nil {
-		return nil, errors.New("service: nvalid token")
+	if err = m.paseto.Decrypt(token, m.symmKey, payload, nil); err != nil {
+		return nil, errors.New("service: invalid token")
 	}
-
-	// err = payload.Valid()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
+	if err = payload.Valid(); err != nil {
+		return nil, err
+	}
 	return payload, nil
 }
