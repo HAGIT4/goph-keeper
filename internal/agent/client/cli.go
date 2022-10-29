@@ -43,6 +43,7 @@ func WithAgentService(as service.AgentServiceInterface) agentCLIoption {
 
 func (ac *agentCli) InitCommands() {
 	ac.AddRegisterCommand()
+	ac.AddLoginPassCmd()
 }
 
 func (ac *agentCli) Execute() (err error) {

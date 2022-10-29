@@ -9,6 +9,8 @@ import (
 type AgentServiceInterface interface {
 	RegisterUser(ctx context.Context) (err error)
 	Login(ctx context.Context) (err error)
+
+	SaveLoginPass(ctx context.Context) (err error)
 }
 
 type agentService struct {

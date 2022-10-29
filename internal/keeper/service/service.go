@@ -6,10 +6,18 @@ import (
 	"github.com/hagit4/goph-keeper/internal/keeper/storage"
 )
 
+type key int
+
+const (
+	KeyUsername key = iota
+)
+
 type KeeperServiceInterface interface {
 	RegisterUser(ctx context.Context, req *RegisterUserReq) (resp *RegisterUserResp, err error)
 	Login(ctx context.Context, req *LoginUserReq) (resp *LoginUserResp, err error)
 	VerifyAuthToken(token string) (payload *AuthTokenPayload, err error)
+
+	SaveLoginPass(ctx context.Context, req *SaveLoginPassReq) (resp *SaveLoginPassResp, err error)
 }
 
 type keeperService struct {

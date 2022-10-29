@@ -11,6 +11,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type KeeperServerInterface interface{}
@@ -51,6 +52,8 @@ func NewKeeperServer() (keeper *keeperServer, err error) {
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterAuthServer(grpcServer, grpcService)
+	pb.RegisterLoginPassKeeperServer(grpcServer, grpcService)
+	reflection.Register(grpcServer)
 
 	keeper = &keeperServer{
 		grpcService: grpcService,

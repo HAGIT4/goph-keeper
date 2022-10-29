@@ -10,12 +10,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type key int
-
-const (
-	keyUsername key = iota
-)
-
 func NewAuthInterceptor(sv service.KeeperServiceInterface) grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo,
 		handler grpc.UnaryHandler) (resp interface{}, err error) {
@@ -33,7 +27,7 @@ func NewAuthInterceptor(sv service.KeeperServiceInterface) grpc.UnaryServerInter
 		if err != nil {
 			return nil, status.Error(codes.Unauthenticated, "invalid token")
 		}
-		ctx = context.WithValue(ctx, keyUsername, payload.Username)
+		ctx = context.WithValue(ctx, service.KeyUsername, payload.Username)
 		return handler(ctx, req)
 	}
 }
