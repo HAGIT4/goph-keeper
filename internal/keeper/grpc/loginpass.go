@@ -38,7 +38,7 @@ func (sg *serviceGRPC) GetLoginPass(ctx context.Context, req *pb.GetLoginPassReq
 	return nil, nil
 }
 
-func (sg *serviceGRPC) ListLoginPass(ctx context.Context, req *pb.ListLoginPassRequest) (resp *pb.ListLoginPassResponse, err error) {
+func (sg *serviceGRPC) ListLoginPassKeywords(ctx context.Context, req *pb.ListLoginPassKeywordsRequest) (resp *pb.ListLoginPassKeywordsResponse, err error) {
 	md, _ := metadata.FromIncomingContext(ctx)
 	token := md["token"][0]
 	payload, err := sg.service.VerifyAuthToken(token)
@@ -53,7 +53,9 @@ func (sg *serviceGRPC) ListLoginPass(ctx context.Context, req *pb.ListLoginPassR
 		err = status.Error(codes.Internal, "Internal error")
 		return nil, err
 	}
-	resp.Keywords = svResp.Keywords
+	resp = &pb.ListLoginPassKeywordsResponse{
+		Keywords: svResp.Keywords,
+	}
 	return resp, nil
 
 }

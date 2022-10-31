@@ -48,16 +48,16 @@ message GetLoginPassResponse {
     string encMeta = 4;
 }
 
-message ListLoginPassRequest {}
+message ListLoginPassKeywordsRequest {}
 
-message ListLoginPassResponse {
+message ListLoginPassKeywordsResponse {
     repeated string keywords = 1;
 }
 
 service LoginPassKeeper {
     rpc SaveLoginPass (SaveLoginPassRequest) returns (SaveLoginPassResponse) {}
     rpc GetLoginPass (GetLoginPassRequest) returns (GetLoginPassResponse) {}
-    rpc ListLoginPass (ListLoginPassRequest) returns (ListLoginPassResponse) {}
+    rpc ListLoginPassKeywords (ListLoginPassKeywordsRequest) returns (ListLoginPassKeywordsResponse) {}
 }
 
 message SaveTextRequest {

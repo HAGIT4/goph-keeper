@@ -21,3 +21,11 @@ func (ag *agentGRPC) GetLoginPass(ctx context.Context, req *pb.GetLoginPassReque
 	}
 	return resp, nil
 }
+
+func (ag *agentGRPC) ListLoginPassKeywords(ctx context.Context, req *pb.ListLoginPassKeywordsRequest) (resp *pb.ListLoginPassKeywordsResponse, err error) {
+	resp, err = ag.loginPassClient.ListLoginPassKeywords(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

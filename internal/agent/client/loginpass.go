@@ -16,4 +16,14 @@ func (ac *agentCli) AddLoginPassCmd() {
 		},
 	}
 	ac.rootCmd.AddCommand(saveLoginPass)
+
+	listLoginPassKeywordsCmd := &cobra.Command{
+		Use:   "list",
+		Short: "List loginpass keywors",
+		Run: func(cmd *cobra.Command, args []string) {
+			ctx := context.Background()
+			_ = ac.service.ListLoginPassKeywords(ctx)
+		},
+	}
+	ac.rootCmd.AddCommand(listLoginPassKeywordsCmd)
 }

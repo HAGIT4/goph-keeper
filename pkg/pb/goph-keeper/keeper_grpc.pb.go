@@ -146,7 +146,7 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 type LoginPassKeeperClient interface {
 	SaveLoginPass(ctx context.Context, in *SaveLoginPassRequest, opts ...grpc.CallOption) (*SaveLoginPassResponse, error)
 	GetLoginPass(ctx context.Context, in *GetLoginPassRequest, opts ...grpc.CallOption) (*GetLoginPassResponse, error)
-	ListLoginPass(ctx context.Context, in *ListLoginPassRequest, opts ...grpc.CallOption) (*ListLoginPassResponse, error)
+	ListLoginPassKeywords(ctx context.Context, in *ListLoginPassKeywordsRequest, opts ...grpc.CallOption) (*ListLoginPassKeywordsResponse, error)
 }
 
 type loginPassKeeperClient struct {
@@ -175,9 +175,9 @@ func (c *loginPassKeeperClient) GetLoginPass(ctx context.Context, in *GetLoginPa
 	return out, nil
 }
 
-func (c *loginPassKeeperClient) ListLoginPass(ctx context.Context, in *ListLoginPassRequest, opts ...grpc.CallOption) (*ListLoginPassResponse, error) {
-	out := new(ListLoginPassResponse)
-	err := c.cc.Invoke(ctx, "/keeper.LoginPassKeeper/ListLoginPass", in, out, opts...)
+func (c *loginPassKeeperClient) ListLoginPassKeywords(ctx context.Context, in *ListLoginPassKeywordsRequest, opts ...grpc.CallOption) (*ListLoginPassKeywordsResponse, error) {
+	out := new(ListLoginPassKeywordsResponse)
+	err := c.cc.Invoke(ctx, "/keeper.LoginPassKeeper/ListLoginPassKeywords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (c *loginPassKeeperClient) ListLoginPass(ctx context.Context, in *ListLogin
 type LoginPassKeeperServer interface {
 	SaveLoginPass(context.Context, *SaveLoginPassRequest) (*SaveLoginPassResponse, error)
 	GetLoginPass(context.Context, *GetLoginPassRequest) (*GetLoginPassResponse, error)
-	ListLoginPass(context.Context, *ListLoginPassRequest) (*ListLoginPassResponse, error)
+	ListLoginPassKeywords(context.Context, *ListLoginPassKeywordsRequest) (*ListLoginPassKeywordsResponse, error)
 	mustEmbedUnimplementedLoginPassKeeperServer()
 }
 
@@ -204,8 +204,8 @@ func (UnimplementedLoginPassKeeperServer) SaveLoginPass(context.Context, *SaveLo
 func (UnimplementedLoginPassKeeperServer) GetLoginPass(context.Context, *GetLoginPassRequest) (*GetLoginPassResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLoginPass not implemented")
 }
-func (UnimplementedLoginPassKeeperServer) ListLoginPass(context.Context, *ListLoginPassRequest) (*ListLoginPassResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListLoginPass not implemented")
+func (UnimplementedLoginPassKeeperServer) ListLoginPassKeywords(context.Context, *ListLoginPassKeywordsRequest) (*ListLoginPassKeywordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLoginPassKeywords not implemented")
 }
 func (UnimplementedLoginPassKeeperServer) mustEmbedUnimplementedLoginPassKeeperServer() {}
 
@@ -256,20 +256,20 @@ func _LoginPassKeeper_GetLoginPass_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LoginPassKeeper_ListLoginPass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListLoginPassRequest)
+func _LoginPassKeeper_ListLoginPassKeywords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLoginPassKeywordsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoginPassKeeperServer).ListLoginPass(ctx, in)
+		return srv.(LoginPassKeeperServer).ListLoginPassKeywords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/keeper.LoginPassKeeper/ListLoginPass",
+		FullMethod: "/keeper.LoginPassKeeper/ListLoginPassKeywords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoginPassKeeperServer).ListLoginPass(ctx, req.(*ListLoginPassRequest))
+		return srv.(LoginPassKeeperServer).ListLoginPassKeywords(ctx, req.(*ListLoginPassKeywordsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,8 +290,8 @@ var LoginPassKeeper_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LoginPassKeeper_GetLoginPass_Handler,
 		},
 		{
-			MethodName: "ListLoginPass",
-			Handler:    _LoginPassKeeper_ListLoginPass_Handler,
+			MethodName: "ListLoginPassKeywords",
+			Handler:    _LoginPassKeeper_ListLoginPassKeywords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

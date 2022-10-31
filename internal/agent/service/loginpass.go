@@ -7,7 +7,7 @@ import (
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
 )
 
-func (as agentService) SaveLoginPass(ctx context.Context) (err error) {
+func (as *agentService) SaveLoginPass(ctx context.Context) (err error) {
 	var keyword, login, pass, meta string
 	fmt.Println("Enter keyword: ")
 	fmt.Scanln(&keyword)
@@ -27,6 +27,18 @@ func (as agentService) SaveLoginPass(ctx context.Context) (err error) {
 	_, err = as.agentGRPC.SaveLoginPass(ctx, grpcReq)
 	if err != nil {
 		return err
+	}
+	return nil
+}
+
+func (as *agentService) ListLoginPassKeywords(ctx context.Context) (err error) {
+	grpcReq := &pb.ListLoginPassKeywordsRequest{}
+	grpcResp, err := as.agentGRPC.ListLoginPassKeywords(ctx, grpcReq)
+	if err != nil {
+		return nil
+	}
+	for _, keyword := range grpcResp.Keywords {
+		fmt.Println(keyword)
 	}
 	return nil
 }

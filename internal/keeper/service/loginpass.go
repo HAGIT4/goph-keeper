@@ -34,6 +34,9 @@ func (ks *keeperService) SaveLoginPass(ctx context.Context, req *SaveLoginPassRe
 	if err != nil {
 		return nil, err
 	}
+	resp = &SaveLoginPassResp{
+		EncKeyword: req.EncKeyword,
+	}
 	return resp, nil
 }
 
@@ -56,6 +59,8 @@ func (ks *keeperService) ListLoginPassKeywords(ctx context.Context, req *ListLog
 		}
 		return nil, err
 	}
-	resp.Keywords = stResp.Keywords
+	resp = &ListLoginPassKeywordsResp{
+		Keywords: stResp.Keywords,
+	}
 	return resp, nil
 }
