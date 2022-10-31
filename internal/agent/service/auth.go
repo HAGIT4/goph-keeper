@@ -19,6 +19,7 @@ func (as *agentService) RegisterUser(ctx context.Context) (err error) {
 	}
 	grpcResp, err := as.agentGRPC.RegisterUser(ctx, grpcReq)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	fmt.Println(grpcResp.Username)
@@ -34,11 +35,11 @@ func (as *agentService) Login(ctx context.Context) (err error) {
 		Username: username,
 		Password: password,
 	}
-	grpcResp, err := as.agentGRPC.Login(ctx, grpcReq)
+	_, err = as.agentGRPC.Login(ctx, grpcReq)
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
-	fmt.Println(grpcResp.AccessToken)
 	return nil
 }
 

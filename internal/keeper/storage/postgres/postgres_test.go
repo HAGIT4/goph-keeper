@@ -51,9 +51,9 @@ func TestGetExistingUser(t *testing.T) {
 	ctx := context.Background()
 	stCreateReq := &st.CreateUserReq{
 		User: st.User{
-			ID:       uuid.New(),
+			UserID:   uuid.New(),
 			Username: "NewUser2",
-			Passhash: "pshs",
+			Passhash: []byte("pshs"),
 		},
 	}
 	_, err := postgres.CreateUser(ctx, stCreateReq)

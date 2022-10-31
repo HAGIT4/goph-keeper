@@ -6,6 +6,7 @@ import (
 
 	"crypto/rand"
 
+	"github.com/google/uuid"
 	"github.com/hagit4/goph-keeper/internal/keeper/storage"
 	"golang.org/x/crypto/argon2"
 )
@@ -26,8 +27,9 @@ func (ks *keeperService) RegisterUser(ctx context.Context, req *RegisterUserReq)
 	passHash := hashPassword(req.Password, salt)
 	stReq := &storage.CreateUserReq{
 		User: storage.User{
+			UserID:   uuid.New(),
 			Username: req.Username,
-			Passhash: string(passHash),
+			Passhash: passHash,
 		},
 	}
 	stResp, err := ks.storage.CreateUser(ctx, stReq)
@@ -61,7 +63,7 @@ func (ks *keeperService) Login(ctx context.Context, req *LoginUserReq) (resp *Lo
 		return nil, &ErrorUnauthenticated{}
 	}
 
-	token, err := ks.tokenMaker.CreateAuthToken(req.Username)
+	token, err := ks.tokenMaker.CreateAuthToken(req.Username, stResp.UserID)
 	if err != nil {
 		return nil, &ErrorInternal{}
 	}

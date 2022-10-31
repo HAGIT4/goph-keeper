@@ -2,19 +2,21 @@ package grpc
 
 import (
 	"context"
-	"fmt"
 
 	sv "github.com/hagit4/goph-keeper/internal/keeper/service"
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
+	"google.golang.org/grpc/metadata"
 )
 
 func (sg *serviceGRPC) SaveLoginPass(ctx context.Context, req *pb.SaveLoginPassRequest) (resp *pb.SaveLoginPassResponse, err error) {
-	username := ctx.Value(sv.KeyUsername).(string)
-	if len(username) == 0 {
-		return nil, fmt.Errorf("no username")
+	md, _ := metadata.FromIncomingContext(ctx)
+	token := md["token"][0]
+	payload, err := sg.service.VerifyAuthToken(token)
+	if err != nil {
+		return nil, err
 	}
 	svReq := &sv.SaveLoginPassReq{
-		Username:    "username",
+		UserID:      payload.UserID,
 		EncKeyword:  req.EncKeyword,
 		EncLogin:    req.EncLogin,
 		EncPassword: req.EncPassword,

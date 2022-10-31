@@ -10,12 +10,15 @@ type KeeperStorageInterface interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (resp *CreateUserResp, err error)
 	ReadUser(ctx context.Context, req *ReadUserReq) (resp *ReadUserResp, err error)
 	ReadUserByUsername(ctx context.Context, req *ReadUserByUsernameReq) (resp *ReadUserByUsernameResp, err error)
+
+	CreateLoginPass(ctx context.Context, req *CreateLoginPassReq) (resp *CreateLoginPassResp, err error)
+	// GetLoginPass(ctx context.Context, req *GetLoginPassRequest) (resp *GetLoginPassResponse, err error)
 }
 
 type User struct {
-	ID       uuid.UUID `db:"id"`
+	UserID   uuid.UUID `db:"id"`
 	Username string    `db:"username"`
-	Passhash string    `db:"passhash"`
+	Passhash []byte    `db:"passhash"`
 }
 
 type CreateUserReq struct {
@@ -45,7 +48,7 @@ type LoginPass struct {
 	UserID   uuid.UUID `db:"user_id"`
 	Keyword  string    `db:"keyword"`
 	Login    string    `db:"login"`
-	Password string    `db:"password"`
+	Password []byte    `db:"password"`
 	Meta     string    `db:"meta"`
 }
 

@@ -11,13 +11,14 @@ import (
 )
 
 type TokenMakerInterface interface {
-	CreateAuthToken(username string) (token string, err error)
+	CreateAuthToken(username string, userId uuid.UUID) (token string, err error)
 	VerifyAuthToken(token string) (payload *AuthTokenPayload, err error)
 }
 
 type AuthTokenPayload struct {
 	ID        uuid.UUID `json:"id"`
 	Username  string    `json:"username"`
+	UserID    uuid.UUID `json:"user_id"`
 	IssuedAt  time.Time `json:"issued_at"`
 	ExpiredAt time.Time `json:"expired_at"`
 }
@@ -29,7 +30,7 @@ func (p *AuthTokenPayload) Valid() error {
 	return nil
 }
 
-func NewTokenPayload(username string) (payload *AuthTokenPayload, err error) {
+func NewTokenPayload(username string, userID uuid.UUID) (payload *AuthTokenPayload, err error) {
 	tokenID, err := uuid.NewRandom()
 	if err != nil {
 		return nil, err
@@ -37,6 +38,7 @@ func NewTokenPayload(username string) (payload *AuthTokenPayload, err error) {
 	payload = &AuthTokenPayload{
 		ID:        tokenID,
 		Username:  username,
+		UserID:    userID,
 		IssuedAt:  time.Now(),
 		ExpiredAt: time.Now().Add(time.Hour * 24),
 	}
@@ -61,8 +63,8 @@ func NewTokenMaker(symmKey string) (maker *TokenMaker, err error) {
 	return maker, nil
 }
 
-func (m *TokenMaker) CreateAuthToken(username string) (token string, err error) {
-	payload, err := NewTokenPayload(username)
+func (m *TokenMaker) CreateAuthToken(username string, userID uuid.UUID) (token string, err error) {
+	payload, err := NewTokenPayload(username, userID)
 	if err != nil {
 		return "", err
 	}

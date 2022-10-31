@@ -3,6 +3,7 @@ package client
 import (
 	"github.com/hagit4/goph-keeper/internal/agent/config"
 	keeperGRPC "github.com/hagit4/goph-keeper/internal/agent/grpc"
+	in "github.com/hagit4/goph-keeper/internal/agent/grpc/interceptor"
 	"github.com/hagit4/goph-keeper/internal/agent/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,7 +21,11 @@ func NewAgentClient() (client *agentClient, err error) {
 		return nil, err
 	}
 
-	conn, err := grpc.Dial(config.KeeperAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	authInterceptor := in.NewAuthInterceptor()
+	conn, err := grpc.Dial(config.KeeperAddress,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(authInterceptor),
+	)
 	if err != nil {
 		return nil, err
 	}

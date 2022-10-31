@@ -9,7 +9,7 @@ import (
 func (ps *keeperPostgresStorage) CreateUser(ctx context.Context, req *st.CreateUserReq) (resp *st.CreateUserResp, err error) {
 	resp = &st.CreateUserResp{}
 	query := `INSERT INTO keeper.user (id, username, passhash) VALUES ($1, $2, $3)`
-	_, err = ps.db.ExecContext(ctx, query, req.ID, req.Username, req.Passhash)
+	_, err = ps.db.ExecContext(ctx, query, req.UserID, req.Username, req.Passhash)
 	if err != nil {
 		return nil, &st.ErrorUserNotCreated{}
 	}
