@@ -49,3 +49,17 @@ func (ps *keeperPostgresStorage) UpdateLogin(ctx context.Context, req *st.Update
 	}
 	return resp, nil
 }
+
+func (ps *keeperPostgresStorage) ListLoginPassKeywords(ctx context.Context, req *st.ListLoginPassKeywordsReq) (resp *st.ListLoginPassKeywordsResp, err error) {
+	resp = &st.ListLoginPassKeywordsResp{}
+	var keywords []string
+	query := `SELECT keyword FROM keeper.loginpass WHERE user_id=$1`
+	if err = ps.db.SelectContext(ctx, &keywords, query, req.UserID); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, st.NewErrorNoLoginPassFoundForUser(req.UserID)
+		}
+		return nil, err
+	}
+	resp.Keywords = keywords
+	return resp, nil
+}

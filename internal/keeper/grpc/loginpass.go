@@ -5,7 +5,9 @@ import (
 
 	sv "github.com/hagit4/goph-keeper/internal/keeper/service"
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 func (sg *serviceGRPC) SaveLoginPass(ctx context.Context, req *pb.SaveLoginPassRequest) (resp *pb.SaveLoginPassResponse, err error) {
@@ -34,4 +36,24 @@ func (sg *serviceGRPC) SaveLoginPass(ctx context.Context, req *pb.SaveLoginPassR
 
 func (sg *serviceGRPC) GetLoginPass(ctx context.Context, req *pb.GetLoginPassRequest) (resp *pb.GetLoginPassResponse, err error) {
 	return nil, nil
+}
+
+func (sg *serviceGRPC) ListLoginPass(ctx context.Context, req *pb.ListLoginPassRequest) (resp *pb.ListLoginPassResponse, err error) {
+	md, _ := metadata.FromIncomingContext(ctx)
+	token := md["token"][0]
+	payload, err := sg.service.VerifyAuthToken(token)
+	if err != nil {
+		return nil, err
+	}
+	svReq := &sv.ListLoginPassKeywordsReq{
+		UserID: payload.UserID,
+	}
+	svResp, err := sg.service.ListLoginPassKeywords(ctx, svReq)
+	if err != nil {
+		err = status.Error(codes.Internal, "Internal error")
+		return nil, err
+	}
+	resp.Keywords = svResp.Keywords
+	return resp, nil
+
 }

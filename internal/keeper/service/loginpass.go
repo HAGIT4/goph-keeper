@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/google/uuid"
 	st "github.com/hagit4/goph-keeper/internal/keeper/storage"
@@ -33,5 +34,28 @@ func (ks *keeperService) SaveLoginPass(ctx context.Context, req *SaveLoginPassRe
 	if err != nil {
 		return nil, err
 	}
+	return resp, nil
+}
+
+type ListLoginPassKeywordsReq struct {
+	UserID uuid.UUID
+}
+
+type ListLoginPassKeywordsResp struct {
+	Keywords []string
+}
+
+func (ks *keeperService) ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error) {
+	stReq := &st.ListLoginPassKeywordsReq{
+		UserID: req.UserID,
+	}
+	stResp, err := ks.storage.ListLoginPassKeywords(ctx, stReq)
+	if err != nil {
+		if errors.Is(err, &st.ErrorNoLoginPassFoundForUser{}) {
+			return resp, nil
+		}
+		return nil, err
+	}
+	resp.Keywords = stResp.Keywords
 	return resp, nil
 }

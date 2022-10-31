@@ -18,6 +18,7 @@ type KeeperServiceInterface interface {
 	VerifyAuthToken(token string) (payload *AuthTokenPayload, err error)
 
 	SaveLoginPass(ctx context.Context, req *SaveLoginPassReq) (resp *SaveLoginPassResp, err error)
+	ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error)
 }
 
 type keeperService struct {

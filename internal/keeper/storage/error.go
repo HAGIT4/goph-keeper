@@ -98,3 +98,17 @@ func NewErrorLoginNotUpdatedByID(id uuid.UUID, userID uuid.UUID, login string, e
 		e:      e,
 	}
 }
+
+type ErrorNoLoginPassFoundForUser struct {
+	userID uuid.UUID
+}
+
+func (err *ErrorNoLoginPassFoundForUser) Error() string {
+	return fmt.Sprintf("storage: no loginpass found for user with ID %s", err.userID)
+}
+
+func NewErrorNoLoginPassFoundForUser(userID uuid.UUID) (err error) {
+	return &ErrorNoLoginPassFoundForUser{
+		userID: userID,
+	}
+}
