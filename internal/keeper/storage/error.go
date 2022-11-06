@@ -145,6 +145,25 @@ func NewErrorTextDataNotFoundByID(id uuid.UUID, userID uuid.UUID, e error) (err 
 	}
 }
 
+type ErrorTextDataNotFoundByKeyword struct {
+	keyword string
+	userID  uuid.UUID
+	e       error
+}
+
+func (err *ErrorTextDataNotFoundByKeyword) Error() string {
+	return fmt.Sprintf(`storage: textdata with keyword %s and user ID %s not found: %s`,
+		err.keyword, err.userID, err.e)
+}
+
+func NewErrorTextDataNotFoundByKeyword(keyword string, userID uuid.UUID, e error) (err error) {
+	return &ErrorTextDataNotFoundByKeyword{
+		keyword: keyword,
+		userID:  userID,
+		e:       e,
+	}
+}
+
 type ErrorTextDataNotUpdated struct {
 	id     uuid.UUID
 	userID uuid.UUID
@@ -171,13 +190,31 @@ type ErrorTextDataNotDeleted struct {
 }
 
 func (err *ErrorTextDataNotDeleted) Error() string {
-	return fmt.Sprintf("storage: textdate with ID %s and user ID %s is not deleted: %s",
+	return fmt.Sprintf("storage: textdata with ID %s and user ID %s is not deleted: %s",
 		err.id, err.userID, err.e)
 }
 
 func NewErrorTextDataNotDeleted(id uuid.UUID, userID uuid.UUID, e error) (err error) {
 	return &ErrorTextDataNotDeleted{
 		id:     id,
+		userID: userID,
+		e:      e,
+	}
+}
+
+type ErrorTextDataNotFoundForUser struct {
+	userID uuid.UUID
+	e      error
+}
+
+func (err *ErrorTextDataNotFoundForUser) Error() string {
+	return fmt.Sprintf("storage: textdata for user with ID %s not found: %s",
+		err.userID, err.e,
+	)
+}
+
+func NewErrorTextDataNotFoundForUser(userID uuid.UUID, e error) (err error) {
+	return &ErrorTextDataNotFoundForUser{
 		userID: userID,
 		e:      e,
 	}

@@ -10,11 +10,18 @@ type KeeperStorageInterface interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (resp *CreateUserResp, err error)
 	ReadUser(ctx context.Context, req *ReadUserReq) (resp *ReadUserResp, err error)
 	ReadUserByUsername(ctx context.Context, req *ReadUserByUsernameReq) (resp *ReadUserByUsernameResp, err error)
-
+	//LoginPass
 	CreateLoginPass(ctx context.Context, req *CreateLoginPassReq) (resp *CreateLoginPassResp, err error)
 	ReadLoginPassByID(ctx context.Context, req *ReadLoginPassByIDreq) (resp *ReadLoginPassByIDresp, err error)
 	ReadLoginPassByKeyword(ctx context.Context, req *ReadLoginPassByKeywordReq) (resp *ReadLoginPassByKeywordResp, err error)
 	ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error)
+	//TextData
+	CreateTextData(ctx context.Context, req *CreateTextDataReq) (resp *CreateTextDataResp, err error)
+	ReadTextData(ctx context.Context, req *ReadTextDataReq) (resp *ReadTextDataResp, err error)
+	ReadTextDataByKeyword(ctx context.Context, req *ReadTextDataByKeywordReq) (resp *ReadTextDataByKeywordResp, err error)
+	UpdateTextData(ctx context.Context, req *UpdateTextDataReq) (resp *UpdateTextDataResp, err error)
+	DeleteTextData(ctx context.Context, req *DeleteTextDataReq) (resp *DeleteTextDataResp, err error)
+	ListTextDataKeywords(ctx context.Context, req *ListTextDataKeywordsReq) (resp *ListTextDataKeywordsResp, err error)
 }
 
 type User struct {
@@ -129,6 +136,15 @@ type ReadTextDataResp struct {
 	TextData TextData
 }
 
+type ReadTextDataByKeywordReq struct {
+	UserId  uuid.UUID
+	Keyword string
+}
+
+type ReadTextDataByKeywordResp struct {
+	TextData TextData
+}
+
 //Update TextData
 type UpdateTextDataReq struct {
 	TextData TextData
@@ -143,3 +159,12 @@ type DeleteTextDataReq struct {
 }
 
 type DeleteTextDataResp struct{}
+
+//List TextData
+type ListTextDataKeywordsReq struct {
+	UserID uuid.UUID
+}
+
+type ListTextDataKeywordsResp struct {
+	Keywords []string
+}

@@ -30,6 +30,18 @@ func (ps *keeperPostgresStorage) ReadTextData(ctx context.Context, req *st.ReadT
 	return resp, nil
 }
 
+func (ps *keeperPostgresStorage) ReadTextDataByKeyword(ctx context.Context, req *st.ReadTextDataByKeywordReq) (resp *st.ReadTextDataByKeywordResp, err error) {
+	resp = &st.ReadTextDataByKeywordResp{}
+	query := `SELECT * FROM keeper.textdata WHERE keyword=$1 AND user_id=$2 LIMIT 1`
+	if err = ps.db.Get(resp, query, req.Keyword, req.UserId); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, st.NewErrorTextDataNotFoundByKeyword(req.Keyword, req.UserId, err)
+		}
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (ps *keeperPostgresStorage) UpdateTextData(ctx context.Context, req *st.UpdateTextDataReq) (resp *st.UpdateTextDataResp, err error) {
 	resp = &st.UpdateTextDataResp{}
 	query := `UPDATE keeper.textdata SET textdata=$1 WHERE id=$2 AND user_id=$3 AND keyword=$4`
@@ -45,6 +57,18 @@ func (ps *keeperPostgresStorage) DeleteTextData(ctx context.Context, req *st.Del
 	query := `DELETE FROM keeper.textdata WHERE id=$1 AND user_id=$2`
 	if _, err = ps.db.ExecContext(ctx, query, req.ID, req.UserID); err != nil {
 		return nil, st.NewErrorTextDataNotDeleted(req.ID, req.UserID, err)
+	}
+	return resp, nil
+}
+
+func (ps *keeperPostgresStorage) ListTextDataKeywords(ctx context.Context, req *st.ListTextDataKeywordsReq) (resp *st.ListTextDataKeywordsResp, err error) {
+	resp = &st.ListTextDataKeywordsResp{}
+	var keywords []string
+	query := `SELECT keyword FROM keeper.textdata WHERE user_id=$1`
+	if err = ps.db.SelectContext(ctx, &keywords, query, req.UserID); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, st.NewErrorTextDataNotFoundForUser(req.UserID, err)
+		}
 	}
 	return resp, nil
 }
