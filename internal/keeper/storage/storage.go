@@ -32,6 +32,14 @@ type LoginPass struct {
 	Meta     string    `db:"meta"`
 }
 
+type TextData struct {
+	ID       uuid.UUID `db:"id"`
+	UserID   uuid.UUID `db:"user_id"`
+	Keyword  string    `db:"keyword"`
+	TextData string    `db:"textdata"`
+	Meta     string    `db:"meta"`
+}
+
 //Create User
 type CreateUserReq struct {
 	User
@@ -101,3 +109,37 @@ type ListLoginPassKeywordsReq struct {
 type ListLoginPassKeywordsResp struct {
 	Keywords []string
 }
+
+//Text structures
+
+//Create TextData
+type CreateTextDataReq struct {
+	TextData TextData
+}
+
+type CreateTextDataResp struct{}
+
+//Read TextData
+type ReadTextDataReq struct {
+	UserID uuid.UUID
+	ID     uuid.UUID
+}
+
+type ReadTextDataResp struct {
+	TextData TextData
+}
+
+//Update TextData
+type UpdateTextDataReq struct {
+	TextData TextData
+}
+
+type UpdateTextDataResp struct{}
+
+//Delete TextData
+type DeleteTextDataReq struct {
+	UserID uuid.UUID
+	ID     uuid.UUID
+}
+
+type DeleteTextDataResp struct{}

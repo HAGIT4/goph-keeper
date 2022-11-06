@@ -112,3 +112,73 @@ func NewErrorNoLoginPassFoundForUser(userID uuid.UUID) (err error) {
 		userID: userID,
 	}
 }
+
+type ErrorTextDataNotCreated struct {
+	e error
+}
+
+func (err *ErrorTextDataNotCreated) Error() string {
+	return fmt.Sprintf("storage: textdate not created: %s", err.e)
+}
+
+func NewErrorTextDataNotCreated(e error) (err error) {
+	return &ErrorLoginPassNotCreated{
+		e: e,
+	}
+}
+
+type ErrorTextDataNotFoundByID struct {
+	id     uuid.UUID
+	userID uuid.UUID
+	e      error
+}
+
+func (err *ErrorTextDataNotFoundByID) Error() string {
+	return fmt.Sprintf("storage: textdata with ID %s and user ID %s not found: %s", err.id, err.userID, err.e)
+}
+
+func NewErrorTextDataNotFoundByID(id uuid.UUID, userID uuid.UUID, e error) (err error) {
+	return &ErrorLoginPassNotFoundByID{
+		id:     id,
+		userID: userID,
+		e:      e,
+	}
+}
+
+type ErrorTextDataNotUpdated struct {
+	id     uuid.UUID
+	userID uuid.UUID
+	e      error
+}
+
+func (err *ErrorTextDataNotUpdated) Error() string {
+	return fmt.Sprintf("storage: textdata with ID %s and user ID %s is not updated: %s",
+		err.id, err.userID, err.e)
+}
+
+func NewErrorTextDataNotUpdated(id uuid.UUID, userID uuid.UUID, e error) (err error) {
+	return &ErrorLoginNotUpdatedByID{
+		id:     id,
+		userID: userID,
+		e:      e,
+	}
+}
+
+type ErrorTextDataNotDeleted struct {
+	id     uuid.UUID
+	userID uuid.UUID
+	e      error
+}
+
+func (err *ErrorTextDataNotDeleted) Error() string {
+	return fmt.Sprintf("storage: textdate with ID %s and user ID %s is not deleted: %s",
+		err.id, err.userID, err.e)
+}
+
+func NewErrorTextDataNotDeleted(id uuid.UUID, userID uuid.UUID, e error) (err error) {
+	return &ErrorTextDataNotDeleted{
+		id:     id,
+		userID: userID,
+		e:      e,
+	}
+}

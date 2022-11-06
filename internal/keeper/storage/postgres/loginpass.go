@@ -21,7 +21,7 @@ func (ps *keeperPostgresStorage) ReadLoginPassByID(ctx context.Context, req *st.
 	resp = &st.ReadLoginPassByIDresp{}
 	query := `SELECT * FROM keeper.loginpass WHERE id=$1 AND user_id=$2 LIMIT 1`
 	if err = ps.db.Get(resp, query, req.ID, req.UserID); err != nil {
-		if err != sql.ErrNoRows {
+		if err == sql.ErrNoRows {
 			return nil, st.NewErrorLoginPassNotFoundByID(req.ID, req.UserID, err)
 		}
 		return nil, err
