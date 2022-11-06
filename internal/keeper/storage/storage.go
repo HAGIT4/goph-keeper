@@ -17,7 +17,7 @@ type KeeperStorageInterface interface {
 	ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error)
 	//TextData
 	CreateTextData(ctx context.Context, req *CreateTextDataReq) (resp *CreateTextDataResp, err error)
-	ReadTextData(ctx context.Context, req *ReadTextDataReq) (resp *ReadTextDataResp, err error)
+	ReadTextDataByID(ctx context.Context, req *ReadTextDataByIDreq) (resp *ReadTextDataByIDresp, err error)
 	ReadTextDataByKeyword(ctx context.Context, req *ReadTextDataByKeywordReq) (resp *ReadTextDataByKeywordResp, err error)
 	UpdateTextData(ctx context.Context, req *UpdateTextDataReq) (resp *UpdateTextDataResp, err error)
 	DeleteTextData(ctx context.Context, req *DeleteTextDataReq) (resp *DeleteTextDataResp, err error)
@@ -124,15 +124,17 @@ type CreateTextDataReq struct {
 	TextData TextData
 }
 
-type CreateTextDataResp struct{}
+type CreateTextDataResp struct {
+	Keyword string
+}
 
 //Read TextData
-type ReadTextDataReq struct {
+type ReadTextDataByIDreq struct {
 	UserID uuid.UUID
 	ID     uuid.UUID
 }
 
-type ReadTextDataResp struct {
+type ReadTextDataByIDresp struct {
 	TextData TextData
 }
 

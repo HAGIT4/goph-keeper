@@ -15,11 +15,12 @@ func (ps *keeperPostgresStorage) CreateTextData(ctx context.Context, req *st.Cre
 	if err != nil {
 		return nil, st.NewErrorTextDataNotCreated(err)
 	}
+	resp.Keyword = req.TextData.Keyword
 	return resp, nil
 }
 
-func (ps *keeperPostgresStorage) ReadTextData(ctx context.Context, req *st.ReadTextDataReq) (resp *st.ReadTextDataResp, err error) {
-	resp = &st.ReadTextDataResp{}
+func (ps *keeperPostgresStorage) ReadTextDataByID(ctx context.Context, req *st.ReadTextDataByIDreq) (resp *st.ReadTextDataByIDresp, err error) {
+	resp = &st.ReadTextDataByIDresp{}
 	query := `SELECT * FROM keeper.textdata WHERE id=$1 AND user_id=$2 LIMIT 1`
 	if err = ps.db.Get(resp, query, req.ID, req.UserID); err != nil {
 		if err == sql.ErrNoRows {
