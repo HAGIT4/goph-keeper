@@ -60,28 +60,29 @@ service LoginPassKeeper {
     rpc ListLoginPassKeywords (ListLoginPassKeywordsRequest) returns (ListLoginPassKeywordsResponse) {}
 }
 
-message SaveTextRequest {
+
+message SaveTextDataRequest {
     string encKeyword = 1;
-    string encText = 2;
+    string encTextData = 2;
     string encMeta = 3;
 }
 
-message SaveTextResponse {
+message SaveTextDataResponse {
     string encKeyword = 1;
 
 }
 
-message GetTextRequest {
+message GetTextDataRequest {
     string encKeyword = 1;
 }
 
-message GetTextResponse {
+message GetTextDataResponse {
     string encKeyword = 1;
-    string encText = 2;
+    string encTextData = 2;
     string encMeta = 3;
 }
 
-service TextKeeper {
-    rpc SaveText (SaveTextRequest) returns (SaveTextResponse) {}
-    rpc GetText (GetTextRequest) returns (GetTextResponse) {} 
+service TextDataKeeper {
+    rpc SaveTextData (SaveTextDataRequest) returns (SaveTextDataResponse) {}
+    rpc GetTextData (GetTextDataRequest) returns (GetTextDataResponse) {} 
 }

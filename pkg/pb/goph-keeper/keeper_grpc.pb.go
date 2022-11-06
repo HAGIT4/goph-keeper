@@ -298,122 +298,122 @@ var LoginPassKeeper_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "keeper.proto",
 }
 
-// TextKeeperClient is the client API for TextKeeper service.
+// TextDataKeeperClient is the client API for TextDataKeeper service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TextKeeperClient interface {
-	SaveText(ctx context.Context, in *SaveTextRequest, opts ...grpc.CallOption) (*SaveTextResponse, error)
-	GetText(ctx context.Context, in *GetTextRequest, opts ...grpc.CallOption) (*GetTextResponse, error)
+type TextDataKeeperClient interface {
+	SaveTextData(ctx context.Context, in *SaveTextDataRequest, opts ...grpc.CallOption) (*SaveTextDataResponse, error)
+	GetTextData(ctx context.Context, in *GetTextDataRequest, opts ...grpc.CallOption) (*GetTextDataResponse, error)
 }
 
-type textKeeperClient struct {
+type textDataKeeperClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTextKeeperClient(cc grpc.ClientConnInterface) TextKeeperClient {
-	return &textKeeperClient{cc}
+func NewTextDataKeeperClient(cc grpc.ClientConnInterface) TextDataKeeperClient {
+	return &textDataKeeperClient{cc}
 }
 
-func (c *textKeeperClient) SaveText(ctx context.Context, in *SaveTextRequest, opts ...grpc.CallOption) (*SaveTextResponse, error) {
-	out := new(SaveTextResponse)
-	err := c.cc.Invoke(ctx, "/keeper.TextKeeper/SaveText", in, out, opts...)
+func (c *textDataKeeperClient) SaveTextData(ctx context.Context, in *SaveTextDataRequest, opts ...grpc.CallOption) (*SaveTextDataResponse, error) {
+	out := new(SaveTextDataResponse)
+	err := c.cc.Invoke(ctx, "/keeper.TextDataKeeper/SaveTextData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *textKeeperClient) GetText(ctx context.Context, in *GetTextRequest, opts ...grpc.CallOption) (*GetTextResponse, error) {
-	out := new(GetTextResponse)
-	err := c.cc.Invoke(ctx, "/keeper.TextKeeper/GetText", in, out, opts...)
+func (c *textDataKeeperClient) GetTextData(ctx context.Context, in *GetTextDataRequest, opts ...grpc.CallOption) (*GetTextDataResponse, error) {
+	out := new(GetTextDataResponse)
+	err := c.cc.Invoke(ctx, "/keeper.TextDataKeeper/GetTextData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TextKeeperServer is the server API for TextKeeper service.
-// All implementations must embed UnimplementedTextKeeperServer
+// TextDataKeeperServer is the server API for TextDataKeeper service.
+// All implementations must embed UnimplementedTextDataKeeperServer
 // for forward compatibility
-type TextKeeperServer interface {
-	SaveText(context.Context, *SaveTextRequest) (*SaveTextResponse, error)
-	GetText(context.Context, *GetTextRequest) (*GetTextResponse, error)
-	mustEmbedUnimplementedTextKeeperServer()
+type TextDataKeeperServer interface {
+	SaveTextData(context.Context, *SaveTextDataRequest) (*SaveTextDataResponse, error)
+	GetTextData(context.Context, *GetTextDataRequest) (*GetTextDataResponse, error)
+	mustEmbedUnimplementedTextDataKeeperServer()
 }
 
-// UnimplementedTextKeeperServer must be embedded to have forward compatible implementations.
-type UnimplementedTextKeeperServer struct {
+// UnimplementedTextDataKeeperServer must be embedded to have forward compatible implementations.
+type UnimplementedTextDataKeeperServer struct {
 }
 
-func (UnimplementedTextKeeperServer) SaveText(context.Context, *SaveTextRequest) (*SaveTextResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SaveText not implemented")
+func (UnimplementedTextDataKeeperServer) SaveTextData(context.Context, *SaveTextDataRequest) (*SaveTextDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveTextData not implemented")
 }
-func (UnimplementedTextKeeperServer) GetText(context.Context, *GetTextRequest) (*GetTextResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetText not implemented")
+func (UnimplementedTextDataKeeperServer) GetTextData(context.Context, *GetTextDataRequest) (*GetTextDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTextData not implemented")
 }
-func (UnimplementedTextKeeperServer) mustEmbedUnimplementedTextKeeperServer() {}
+func (UnimplementedTextDataKeeperServer) mustEmbedUnimplementedTextDataKeeperServer() {}
 
-// UnsafeTextKeeperServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TextKeeperServer will
+// UnsafeTextDataKeeperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TextDataKeeperServer will
 // result in compilation errors.
-type UnsafeTextKeeperServer interface {
-	mustEmbedUnimplementedTextKeeperServer()
+type UnsafeTextDataKeeperServer interface {
+	mustEmbedUnimplementedTextDataKeeperServer()
 }
 
-func RegisterTextKeeperServer(s grpc.ServiceRegistrar, srv TextKeeperServer) {
-	s.RegisterService(&TextKeeper_ServiceDesc, srv)
+func RegisterTextDataKeeperServer(s grpc.ServiceRegistrar, srv TextDataKeeperServer) {
+	s.RegisterService(&TextDataKeeper_ServiceDesc, srv)
 }
 
-func _TextKeeper_SaveText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SaveTextRequest)
+func _TextDataKeeper_SaveTextData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveTextDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TextKeeperServer).SaveText(ctx, in)
+		return srv.(TextDataKeeperServer).SaveTextData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/keeper.TextKeeper/SaveText",
+		FullMethod: "/keeper.TextDataKeeper/SaveTextData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TextKeeperServer).SaveText(ctx, req.(*SaveTextRequest))
+		return srv.(TextDataKeeperServer).SaveTextData(ctx, req.(*SaveTextDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TextKeeper_GetText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTextRequest)
+func _TextDataKeeper_GetTextData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTextDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TextKeeperServer).GetText(ctx, in)
+		return srv.(TextDataKeeperServer).GetTextData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/keeper.TextKeeper/GetText",
+		FullMethod: "/keeper.TextDataKeeper/GetTextData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TextKeeperServer).GetText(ctx, req.(*GetTextRequest))
+		return srv.(TextDataKeeperServer).GetTextData(ctx, req.(*GetTextDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TextKeeper_ServiceDesc is the grpc.ServiceDesc for TextKeeper service.
+// TextDataKeeper_ServiceDesc is the grpc.ServiceDesc for TextDataKeeper service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TextKeeper_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "keeper.TextKeeper",
-	HandlerType: (*TextKeeperServer)(nil),
+var TextDataKeeper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "keeper.TextDataKeeper",
+	HandlerType: (*TextDataKeeperServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SaveText",
-			Handler:    _TextKeeper_SaveText_Handler,
+			MethodName: "SaveTextData",
+			Handler:    _TextDataKeeper_SaveTextData_Handler,
 		},
 		{
-			MethodName: "GetText",
-			Handler:    _TextKeeper_GetText_Handler,
+			MethodName: "GetTextData",
+			Handler:    _TextDataKeeper_GetTextData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

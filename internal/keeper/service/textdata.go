@@ -66,6 +66,34 @@ func (ks *keeperService) ReadTextDataByID(ctx context.Context, req *ReadTextData
 	return resp, nil
 }
 
+type ReadTextDataByKeywordReq struct {
+	UserID  uuid.UUID
+	Keyword string
+}
+
+type ReadTextDataByKeywordResp struct {
+	Keyword  string
+	TextData string
+	Meta     string
+}
+
+func (ks *keeperService) ReadTextDataByKeyword(ctx context.Context, req *ReadTextDataByKeywordReq) (resp *ReadTextDataByKeywordResp, err error) {
+	stReq := &st.ReadTextDataByKeywordReq{
+		UserId:  req.UserID,
+		Keyword: req.Keyword,
+	}
+	stResp, err := ks.storage.ReadTextDataByKeyword(ctx, stReq)
+	if err != nil {
+		return nil, err
+	}
+	resp = &ReadTextDataByKeywordResp{
+		Keyword:  stResp.TextData.Keyword,
+		TextData: stResp.TextData.TextData,
+		Meta:     stResp.TextData.Meta,
+	}
+	return resp, nil
+}
+
 type ListTextDataKeywordsReq struct {
 	UserID uuid.UUID
 }
