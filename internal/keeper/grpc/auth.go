@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/hagit4/goph-keeper/internal/keeper/service"
 	sv "github.com/hagit4/goph-keeper/internal/keeper/service"
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
 	"google.golang.org/grpc/codes"
@@ -32,7 +31,7 @@ func (sg *serviceGRPC) Register(ctx context.Context, req *pb.RegisterRequest) (r
 }
 
 func (sg *serviceGRPC) Login(ctx context.Context, req *pb.LoginRequest) (resp *pb.LoginResponse, err error) {
-	svReq := &service.LoginUserReq{
+	svReq := &sv.LoginUserReq{
 		Username: req.Username,
 		Password: req.Password,
 	}

@@ -14,11 +14,15 @@ type AgentGRPCinterface interface {
 	SaveLoginPass(ctx context.Context, req *pb.SaveLoginPassRequest) (resp *pb.SaveLoginPassResponse, err error)
 	GetLoginPass(ctx context.Context, req *pb.GetLoginPassRequest) (resp *pb.GetLoginPassResponse, err error)
 	ListLoginPassKeywords(ctx context.Context, req *pb.ListLoginPassKeywordsRequest) (resp *pb.ListLoginPassKeywordsResponse, err error)
+
+	SaveTextData(ctx context.Context, req *pb.SaveTextDataRequest) (resp *pb.SaveTextDataResponse, err error)
+	GetTextData(ctx context.Context, req *pb.GetTextDataRequest) (resp *pb.GetTextDataResponse, err error)
 }
 
 type agentGRPC struct {
 	authClient      pb.AuthClient
 	loginPassClient pb.LoginPassKeeperClient
+	textdataClient  pb.TextDataKeeperClient
 }
 
 type AgentGRPCoption func(ag *agentGRPC)

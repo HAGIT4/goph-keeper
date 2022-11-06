@@ -16,6 +16,7 @@ type AgentServiceInterface interface {
 
 type agentService struct {
 	agentGRPC keeperGRPC.AgentGRPCinterface
+	encKey    []byte
 }
 
 type AgentServiceOption func(as *agentService)
@@ -31,5 +32,11 @@ func NewAgentService(opts ...AgentServiceOption) (service *agentService) {
 func WithAgentGRPC(ag keeperGRPC.AgentGRPCinterface) AgentServiceOption {
 	return func(as *agentService) {
 		as.agentGRPC = ag
+	}
+}
+
+func WithEncKey(encKey []byte) AgentServiceOption {
+	return func(as *agentService) {
+		as.encKey = encKey
 	}
 }
