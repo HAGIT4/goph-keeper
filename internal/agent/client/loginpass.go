@@ -8,22 +8,32 @@ import (
 
 func (ac *agentCli) AddLoginPassCmd() {
 	saveLoginPass := &cobra.Command{
-		Use:   "save",
+		Use:   "loginpass",
 		Short: "save a loginpass",
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx := context.Background()
 			_ = ac.service.SaveLoginPass(ctx)
 		},
 	}
-	ac.rootCmd.AddCommand(saveLoginPass)
+	ac.createCmd.AddCommand(saveLoginPass)
 
 	listLoginPassKeywordsCmd := &cobra.Command{
-		Use:   "list",
+		Use:   "loginpass",
 		Short: "List loginpass keywors",
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx := context.Background()
 			_ = ac.service.ListLoginPassKeywords(ctx)
 		},
 	}
-	ac.rootCmd.AddCommand(listLoginPassKeywordsCmd)
+	ac.listCmd.AddCommand(listLoginPassKeywordsCmd)
+
+	getLoginPassCmd := &cobra.Command{
+		Use:   "loginpass",
+		Short: "Get loginpass data",
+		Run: func(cmd *cobra.Command, args []string) {
+			ctx := context.Background()
+			_ = ac.service.GetLoginPass(ctx)
+		},
+	}
+	ac.getCmd.AddCommand(getLoginPassCmd)
 }

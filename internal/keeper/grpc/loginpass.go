@@ -35,7 +35,28 @@ func (sg *serviceGRPC) SaveLoginPass(ctx context.Context, req *pb.SaveLoginPassR
 }
 
 func (sg *serviceGRPC) GetLoginPass(ctx context.Context, req *pb.GetLoginPassRequest) (resp *pb.GetLoginPassResponse, err error) {
-	return nil, nil
+	// TODO: middleware for that
+	md, _ := metadata.FromIncomingContext(ctx)
+	token := md["token"][0]
+	payload, err := sg.service.VerifyAuthToken(token)
+	if err != nil {
+		return nil, err
+	}
+	svReq := &sv.GetLoginPassReq{
+		UserID:  payload.UserID,
+		Keyword: req.GetEncKeyword(),
+	}
+	svResp, err := sg.service.GetLoginPass(ctx, svReq)
+	if err != nil {
+		return nil, err
+	}
+	resp = &pb.GetLoginPassResponse{
+		EncKeyword:  svResp.Keyword,
+		EncLogin:    svResp.Login,
+		EncPassword: svResp.Password,
+		EncMeta:     svResp.Meta,
+	}
+	return resp, nil
 }
 
 func (sg *serviceGRPC) ListLoginPassKeywords(ctx context.Context, req *pb.ListLoginPassKeywordsRequest) (resp *pb.ListLoginPassKeywordsResponse, err error) {

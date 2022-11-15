@@ -31,7 +31,7 @@ type User struct {
 }
 
 type LoginPass struct {
-	ID       uuid.UUID `db:"uuid"`
+	ID       uuid.UUID `db:" id"`
 	UserID   uuid.UUID `db:"user_id"`
 	Keyword  string    `db:"keyword"`
 	Login    string    `db:"login"`

@@ -16,18 +16,51 @@ var (
 			fmt.Println("Hi keeper")
 		},
 	}
+	defaultCreateCmd = cobra.Command{
+		Use:   "create",
+		Short: "create entry",
+		Long:  "create entry",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Usage: create + data type")
+		},
+	}
+	defaultListCmd = cobra.Command{
+		Use:   "list",
+		Short: "list entries",
+		Long:  "list entries",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Usage: list + data type")
+		},
+	}
+	defaultGetCmd = cobra.Command{
+		Use:   "get",
+		Short: "get entry info",
+		Long:  "get entry info",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Usage: get + data type")
+		},
+	}
 )
 
 type agentCli struct {
-	rootCmd *cobra.Command
-	service service.AgentServiceInterface
+	rootCmd   *cobra.Command
+	createCmd *cobra.Command
+	listCmd   *cobra.Command
+	getCmd    *cobra.Command
+	service   service.AgentServiceInterface
 }
 
 type agentCLIoption func(ac *agentCli)
 
 func NewAgentCli(opts ...agentCLIoption) (cli *agentCli) {
+	defaultRootCmd.AddCommand(&defaultCreateCmd)
+	defaultRootCmd.AddCommand(&defaultListCmd)
+	defaultRootCmd.AddCommand(&defaultGetCmd)
 	cli = &agentCli{
-		rootCmd: &defaultRootCmd,
+		rootCmd:   &defaultRootCmd,
+		createCmd: &defaultCreateCmd,
+		listCmd:   &defaultListCmd,
+		getCmd:    &defaultGetCmd,
 	}
 	for _, opt := range opts {
 		opt(cli)

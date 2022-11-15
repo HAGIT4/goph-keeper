@@ -35,7 +35,7 @@ func NewAgentClient() (client *agentClient, err error) {
 	)
 	service := service.NewAgentService(
 		service.WithAgentGRPC(agentGRPC),
-		service.WithEncKey(config.EncKey),
+		service.WithEncKey([]byte(config.EncKey)),
 	)
 	cli := NewAgentCli(
 		WithAgentService(service),

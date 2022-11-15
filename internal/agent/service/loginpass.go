@@ -42,3 +42,23 @@ func (as *agentService) ListLoginPassKeywords(ctx context.Context) (err error) {
 	}
 	return nil
 }
+
+func (as *agentService) GetLoginPass(ctx context.Context) (err error) {
+	var keyword string
+	fmt.Println("Enter keyword:")
+	fmt.Scanln(&keyword)
+
+	grpcReq := &pb.GetLoginPassRequest{
+		EncKeyword: keyword,
+	}
+	grpcResp, err := as.agentGRPC.GetLoginPass(ctx, grpcReq)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	fmt.Println(grpcResp.EncKeyword)
+	fmt.Println(grpcResp.EncLogin)
+	fmt.Println(grpcResp.EncPassword)
+	fmt.Println(grpcResp.EncMeta)
+	return nil
+}

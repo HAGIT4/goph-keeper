@@ -19,6 +19,7 @@ type KeeperServiceInterface interface {
 
 	SaveLoginPass(ctx context.Context, req *SaveLoginPassReq) (resp *SaveLoginPassResp, err error)
 	ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error)
+	GetLoginPass(ctx context.Context, req *GetLoginPassReq) (resp *GetLoginPassResp, err error)
 
 	SaveTextData(ctx context.Context, req *SaveTextDataReq) (resp *SaveLoginPassResp, err error)
 	ReadTextDataByID(ctx context.Context, req *ReadTextDataByIDreq) (resp *ReadTextDataByIDresp, err error)

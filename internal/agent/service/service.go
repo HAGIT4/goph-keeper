@@ -12,6 +12,7 @@ type AgentServiceInterface interface {
 
 	SaveLoginPass(ctx context.Context) (err error)
 	ListLoginPassKeywords(ctx context.Context) (err error)
+	GetLoginPass(ctx context.Context) (err error)
 }
 
 type agentService struct {

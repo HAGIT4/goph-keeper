@@ -64,3 +64,35 @@ func (ks *keeperService) ListLoginPassKeywords(ctx context.Context, req *ListLog
 	}
 	return resp, nil
 }
+
+type GetLoginPassReq struct {
+	UserID  uuid.UUID
+	Keyword string
+}
+
+type GetLoginPassResp struct {
+	UserID   uuid.UUID
+	Keyword  string
+	Login    string
+	Password string
+	Meta     string
+}
+
+func (ks *keeperService) GetLoginPass(ctx context.Context, req *GetLoginPassReq) (resp *GetLoginPassResp, err error) {
+	stReq := &st.ReadLoginPassByKeywordReq{
+		UserID:  req.UserID,
+		Keyword: req.Keyword,
+	}
+	stResp, err := ks.storage.ReadLoginPassByKeyword(ctx, stReq)
+	if err != nil {
+		return nil, err
+	}
+	resp = &GetLoginPassResp{
+		UserID:   stResp.UserID,
+		Keyword:  stResp.Keyword,
+		Login:    stResp.Login,
+		Password: string(stResp.Password),
+		Meta:     stResp.Meta,
+	}
+	return resp, nil
+}

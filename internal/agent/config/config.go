@@ -6,7 +6,7 @@ import (
 
 type AgentConfig struct {
 	KeeperAddress string `mapstructure:"keeper_address"`
-	EncKey        []byte `mapstructure:"enc_key"`
+	EncKey        string `mapstructure:"enc_key"`
 }
 
 func InitAgentConfig() (config *AgentConfig, err error) {
