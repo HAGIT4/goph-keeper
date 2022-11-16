@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"encoding/hex"
+
 	pb "github.com/hagit4/goph-keeper/pkg/pb/goph-keeper"
 )
 
@@ -18,11 +20,27 @@ func (as *agentService) SaveLoginPass(ctx context.Context) (err error) {
 	fmt.Println("Enter meta: ")
 	fmt.Scanln(&meta)
 
+	encLoginBytes, err := as.encrypt([]byte(login))
+	if err != nil {
+		return err
+	}
+	encPassBytes, err := as.encrypt([]byte(pass))
+	if err != nil {
+		return err
+	}
+	encMetaBytes, err := as.encrypt([]byte(meta))
+	if err != nil {
+		return err
+	}
+
+	encLogin := hex.EncodeToString(encLoginBytes)
+	encPass := hex.EncodeToString(encPassBytes)
+	encMeta := hex.EncodeToString(encMetaBytes)
 	grpcReq := &pb.SaveLoginPassRequest{
 		EncKeyword:  keyword,
-		EncLogin:    login,
-		EncPassword: pass,
-		EncMeta:     meta,
+		EncLogin:    encLogin,
+		EncPassword: encPass,
+		EncMeta:     encMeta,
 	}
 	_, err = as.agentGRPC.SaveLoginPass(ctx, grpcReq)
 	if err != nil {
@@ -56,9 +74,40 @@ func (as *agentService) GetLoginPass(ctx context.Context) (err error) {
 		fmt.Println(err)
 		return err
 	}
+
+	decodedLoginBytes, err := hex.DecodeString(grpcResp.GetEncLogin())
+	if err != nil {
+		return err
+	}
+	decriptedLoginBytes, err := as.decrypt(decodedLoginBytes)
+	if err != nil {
+		return err
+	}
+	decriptedLogin := string(decriptedLoginBytes)
+
+	decodedPass, err := hex.DecodeString(grpcResp.GetEncPassword())
+	if err != nil {
+		return err
+	}
+	decriptedPassBytes, err := as.decrypt(decodedPass)
+	if err != nil {
+		return err
+	}
+	decriptedPass := string(decriptedPassBytes)
+
+	decodedMeta, err := hex.DecodeString(grpcResp.GetEncMeta())
+	if err != nil {
+		return err
+	}
+	decriptedMetaBytes, err := as.decrypt(decodedMeta)
+	if err != nil {
+		return err
+	}
+	decriptedMeta := string(decriptedMetaBytes)
+
 	fmt.Println(grpcResp.EncKeyword)
-	fmt.Println(grpcResp.EncLogin)
-	fmt.Println(grpcResp.EncPassword)
-	fmt.Println(grpcResp.EncMeta)
+	fmt.Println(decriptedLogin)
+	fmt.Println(decriptedPass)
+	fmt.Println(decriptedMeta)
 	return nil
 }

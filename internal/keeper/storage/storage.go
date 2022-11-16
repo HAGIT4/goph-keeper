@@ -31,7 +31,7 @@ type User struct {
 }
 
 type LoginPass struct {
-	ID       uuid.UUID `db:" id"`
+	ID       uuid.UUID `db:"id"`
 	UserID   uuid.UUID `db:"user_id"`
 	Keyword  string    `db:"keyword"`
 	Login    string    `db:"login"`
@@ -86,7 +86,12 @@ type ReadLoginPassByIDreq struct {
 }
 
 type ReadLoginPassByIDresp struct {
-	LoginPass
+	ID       uuid.UUID `db:"id"`
+	UserID   uuid.UUID `db:"user_id"`
+	Keyword  string    `db:"keyword"`
+	Login    string    `db:"login"`
+	Password []byte    `db:"password"`
+	Meta     string    `db:"meta"`
 }
 
 //Read LoginPass by Keyword
