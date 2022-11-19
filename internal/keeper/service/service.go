@@ -25,6 +25,10 @@ type KeeperServiceInterface interface {
 	ReadTextDataByID(ctx context.Context, req *ReadTextDataByIDreq) (resp *ReadTextDataByIDresp, err error)
 	ReadTextDataByKeyword(ctx context.Context, req *ReadTextDataByKeywordReq) (resp *ReadTextDataByKeywordResp, err error)
 	ListTextDataKeywords(ctx context.Context, req *ListTextDataKeywordsReq) (resp *ListTextDataKeywordsResp, err error)
+
+	SaveCardData(ctx context.Context, req *SaveCardDataReq) (resp *SaveCardDataResp, err error)
+	GetCardData(ctx context.Context, req *GetCardDataReq) (resp *GetCardDataResp, err error)
+	ListCardDataKeywords(ctx context.Context, req *ListCardDataKeywordsReq) (resp *ListCardDataKeywordsResp, err error)
 }
 
 type keeperService struct {
