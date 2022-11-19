@@ -10,18 +10,22 @@ type KeeperStorageInterface interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (resp *CreateUserResp, err error)
 	ReadUser(ctx context.Context, req *ReadUserReq) (resp *ReadUserResp, err error)
 	ReadUserByUsername(ctx context.Context, req *ReadUserByUsernameReq) (resp *ReadUserByUsernameResp, err error)
-	//LoginPass
+	// LoginPass
 	CreateLoginPass(ctx context.Context, req *CreateLoginPassReq) (resp *CreateLoginPassResp, err error)
 	ReadLoginPassByID(ctx context.Context, req *ReadLoginPassByIDreq) (resp *ReadLoginPassByIDresp, err error)
 	ReadLoginPassByKeyword(ctx context.Context, req *ReadLoginPassByKeywordReq) (resp *ReadLoginPassByKeywordResp, err error)
 	ListLoginPassKeywords(ctx context.Context, req *ListLoginPassKeywordsReq) (resp *ListLoginPassKeywordsResp, err error)
-	//TextData
+	// TextData
 	CreateTextData(ctx context.Context, req *CreateTextDataReq) (resp *CreateTextDataResp, err error)
 	ReadTextDataByID(ctx context.Context, req *ReadTextDataByIDreq) (resp *ReadTextDataByIDresp, err error)
 	ReadTextDataByKeyword(ctx context.Context, req *ReadTextDataByKeywordReq) (resp *ReadTextDataByKeywordResp, err error)
 	UpdateTextData(ctx context.Context, req *UpdateTextDataReq) (resp *UpdateTextDataResp, err error)
 	DeleteTextData(ctx context.Context, req *DeleteTextDataReq) (resp *DeleteTextDataResp, err error)
 	ListTextDataKeywords(ctx context.Context, req *ListTextDataKeywordsReq) (resp *ListTextDataKeywordsResp, err error)
+	// CardData
+	CreateCardData(ctx context.Context, req *CreateCardDataReq) (resp *CreateCardDataResp, err error)
+	ReadCardDataByKeyword(ctx context.Context, req *ReadCardDataByKeywordReq) (resp *ReadCardDataByKeywordResp, err error)
+	ListCardDataKeywords(ctx context.Context, req *ListCardDataKeywordsReq) (resp *ListCardDataKeywordsResp, err error)
 }
 
 type User struct {
@@ -45,6 +49,16 @@ type TextData struct {
 	Keyword  string    `db:"keyword"`
 	TextData string    `db:"textdata"`
 	Meta     string    `db:"meta"`
+}
+
+type CardData struct {
+	ID         uuid.UUID `db:"id"`
+	UserID     uuid.UUID `db:"user_id"`
+	Keyword    string    `db:"keyword"`
+	CardNumber string    `db:"card_number"`
+	CardHolder string    `db:"card_holder"`
+	CardCode   string    `db:"card_code"`
+	Meta       string    `db:"meta"`
 }
 
 //Create User
@@ -173,5 +187,40 @@ type ListTextDataKeywordsReq struct {
 }
 
 type ListTextDataKeywordsResp struct {
+	Keywords []string
+}
+
+type CreateCardDataReq struct {
+	ID         uuid.UUID `db:"id"`
+	UserID     uuid.UUID `db:"user_id"`
+	Keyword    string    `db:"keyword"`
+	CardNumber string    `db:"card_number"`
+	CardHolder string    `db:"card_holder"`
+	CardCode   string    `db:"card_code"`
+	Meta       string    `db:"meta"`
+}
+
+type CreateCardDataResp struct{}
+
+type ReadCardDataByKeywordReq struct {
+	UserID  uuid.UUID `db:"user_id"`
+	Keyword string    `db:"keyword"`
+}
+
+type ReadCardDataByKeywordResp struct {
+	ID         uuid.UUID `db:"id"`
+	UserID     uuid.UUID `db:"user_id"`
+	Keyword    string    `db:"keyword"`
+	CardNumber string    `db:"card_number"`
+	CardHolder string    `db:"card_holder"`
+	CardCode   string    `db:"card_code"`
+	Meta       string    `db:"meta"`
+}
+
+type ListCardDataKeywordsReq struct {
+	UserID uuid.UUID `db:"user_id"`
+}
+
+type ListCardDataKeywordsResp struct {
 	Keywords []string
 }

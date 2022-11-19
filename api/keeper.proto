@@ -69,7 +69,6 @@ message SaveTextDataRequest {
 
 message SaveTextDataResponse {
     string encKeyword = 1;
-
 }
 
 message GetTextDataRequest {
@@ -85,4 +84,41 @@ message GetTextDataResponse {
 service TextDataKeeper {
     rpc SaveTextData (SaveTextDataRequest) returns (SaveTextDataResponse) {}
     rpc GetTextData (GetTextDataRequest) returns (GetTextDataResponse) {} 
+}
+
+
+message SaveCardDataRequest {
+    string encKeyword = 1;
+    string encCardNumber = 2;
+    string encCardHolder = 3;
+    string encCardCode = 4;
+    string encMeta = 5;
+}
+
+message SaveCardDataResponse {
+    string encKeyword = 1;
+}
+
+message GetCardDataRequest {
+    string encKeyword = 1;
+}
+
+message GetCardDataResponse {
+    string encKeyword = 1;
+    string encCardNumber = 2;
+    string encCardHolder = 3;
+    string encCardCode = 4;
+    string encMeta = 5;
+}
+
+message ListCardDataKeywordsRequest {}
+
+message ListCardDataKeywordsResponse {
+    repeated string keywords = 1;
+}
+
+service CardDataKeeper {
+    rpc SaveCardData (SaveCardDataRequest) returns (SaveCardDataResponse) {}
+    rpc GetCardData (GetCardDataRequest) returns (GetCardDataResponse) {}
+    rpc ListCardDataKeywords (ListCardDataKeywordsRequest) returns (ListCardDataKeywordsResponse) {}
 }

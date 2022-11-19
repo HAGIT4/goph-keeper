@@ -219,3 +219,49 @@ func NewErrorTextDataNotFoundForUser(userID uuid.UUID, e error) (err error) {
 		e:      e,
 	}
 }
+
+type ErrorCardDataNotCreated struct {
+	e error
+}
+
+func (err *ErrorCardDataNotCreated) Error() string {
+	return fmt.Sprintf("storage: carddata not created: %s", err.e)
+}
+
+func NewErrorCardDataNotCreated(e error) (err error) {
+	return &ErrorCardDataNotCreated{
+		e: e,
+	}
+}
+
+type ErrorCardDataNotFoundByKeyword struct {
+	keyword string
+	userID  uuid.UUID
+	e       error
+}
+
+func (err *ErrorCardDataNotFoundByKeyword) Error() string {
+	return fmt.Sprintf("storage: carddata with keyword %s not found: %s", err.keyword, err.e)
+}
+
+func NewErrorCardDataNotFoundByKeyword(keyword string, userID uuid.UUID, e error) (err error) {
+	return &ErrorCardDataNotFoundByKeyword{
+		keyword: keyword,
+		userID:  userID,
+		e:       e,
+	}
+}
+
+type ErrorNoCardDataFoundForUser struct {
+	userID uuid.UUID
+}
+
+func (err *ErrorNoCardDataFoundForUser) Error() string {
+	return fmt.Sprintf("storage: no carddata found for user with ID %s", err.userID)
+}
+
+func NewErrorNoCardDataFoundForUser(userID uuid.UUID) (err error) {
+	return &ErrorNoCardDataFoundForUser{
+		userID: userID,
+	}
+}

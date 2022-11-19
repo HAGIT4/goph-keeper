@@ -419,3 +419,161 @@ var TextDataKeeper_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "keeper.proto",
 }
+
+// CardDataKeeperClient is the client API for CardDataKeeper service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type CardDataKeeperClient interface {
+	SaveCardData(ctx context.Context, in *SaveCardDataRequest, opts ...grpc.CallOption) (*SaveCardDataResponse, error)
+	GetCardData(ctx context.Context, in *GetCardDataRequest, opts ...grpc.CallOption) (*GetCardDataResponse, error)
+	ListCardDataKeywords(ctx context.Context, in *ListCardDataKeywordsRequest, opts ...grpc.CallOption) (*ListCardDataKeywordsResponse, error)
+}
+
+type cardDataKeeperClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewCardDataKeeperClient(cc grpc.ClientConnInterface) CardDataKeeperClient {
+	return &cardDataKeeperClient{cc}
+}
+
+func (c *cardDataKeeperClient) SaveCardData(ctx context.Context, in *SaveCardDataRequest, opts ...grpc.CallOption) (*SaveCardDataResponse, error) {
+	out := new(SaveCardDataResponse)
+	err := c.cc.Invoke(ctx, "/keeper.CardDataKeeper/SaveCardData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cardDataKeeperClient) GetCardData(ctx context.Context, in *GetCardDataRequest, opts ...grpc.CallOption) (*GetCardDataResponse, error) {
+	out := new(GetCardDataResponse)
+	err := c.cc.Invoke(ctx, "/keeper.CardDataKeeper/GetCardData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cardDataKeeperClient) ListCardDataKeywords(ctx context.Context, in *ListCardDataKeywordsRequest, opts ...grpc.CallOption) (*ListCardDataKeywordsResponse, error) {
+	out := new(ListCardDataKeywordsResponse)
+	err := c.cc.Invoke(ctx, "/keeper.CardDataKeeper/ListCardDataKeywords", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CardDataKeeperServer is the server API for CardDataKeeper service.
+// All implementations must embed UnimplementedCardDataKeeperServer
+// for forward compatibility
+type CardDataKeeperServer interface {
+	SaveCardData(context.Context, *SaveCardDataRequest) (*SaveCardDataResponse, error)
+	GetCardData(context.Context, *GetCardDataRequest) (*GetCardDataResponse, error)
+	ListCardDataKeywords(context.Context, *ListCardDataKeywordsRequest) (*ListCardDataKeywordsResponse, error)
+	mustEmbedUnimplementedCardDataKeeperServer()
+}
+
+// UnimplementedCardDataKeeperServer must be embedded to have forward compatible implementations.
+type UnimplementedCardDataKeeperServer struct {
+}
+
+func (UnimplementedCardDataKeeperServer) SaveCardData(context.Context, *SaveCardDataRequest) (*SaveCardDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveCardData not implemented")
+}
+func (UnimplementedCardDataKeeperServer) GetCardData(context.Context, *GetCardDataRequest) (*GetCardDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCardData not implemented")
+}
+func (UnimplementedCardDataKeeperServer) ListCardDataKeywords(context.Context, *ListCardDataKeywordsRequest) (*ListCardDataKeywordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCardDataKeywords not implemented")
+}
+func (UnimplementedCardDataKeeperServer) mustEmbedUnimplementedCardDataKeeperServer() {}
+
+// UnsafeCardDataKeeperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CardDataKeeperServer will
+// result in compilation errors.
+type UnsafeCardDataKeeperServer interface {
+	mustEmbedUnimplementedCardDataKeeperServer()
+}
+
+func RegisterCardDataKeeperServer(s grpc.ServiceRegistrar, srv CardDataKeeperServer) {
+	s.RegisterService(&CardDataKeeper_ServiceDesc, srv)
+}
+
+func _CardDataKeeper_SaveCardData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveCardDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CardDataKeeperServer).SaveCardData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.CardDataKeeper/SaveCardData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CardDataKeeperServer).SaveCardData(ctx, req.(*SaveCardDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CardDataKeeper_GetCardData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCardDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CardDataKeeperServer).GetCardData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.CardDataKeeper/GetCardData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CardDataKeeperServer).GetCardData(ctx, req.(*GetCardDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CardDataKeeper_ListCardDataKeywords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCardDataKeywordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CardDataKeeperServer).ListCardDataKeywords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.CardDataKeeper/ListCardDataKeywords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CardDataKeeperServer).ListCardDataKeywords(ctx, req.(*ListCardDataKeywordsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CardDataKeeper_ServiceDesc is the grpc.ServiceDesc for CardDataKeeper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var CardDataKeeper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "keeper.CardDataKeeper",
+	HandlerType: (*CardDataKeeperServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SaveCardData",
+			Handler:    _CardDataKeeper_SaveCardData_Handler,
+		},
+		{
+			MethodName: "GetCardData",
+			Handler:    _CardDataKeeper_GetCardData_Handler,
+		},
+		{
+			MethodName: "ListCardDataKeywords",
+			Handler:    _CardDataKeeper_ListCardDataKeywords_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "keeper.proto",
+}
