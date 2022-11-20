@@ -122,3 +122,30 @@ service CardDataKeeper {
     rpc GetCardData (GetCardDataRequest) returns (GetCardDataResponse) {}
     rpc ListCardDataKeywords (ListCardDataKeywordsRequest) returns (ListCardDataKeywordsResponse) {}
 }
+
+
+message SaveBinaryRequest {
+    string keyword = 1;
+    bytes bin = 2;
+    string meta = 3;
+}
+message SaveBinaryResponse {
+    string keyword = 1;
+}
+message GetBinaryRequest {
+    string keyword = 1;
+}
+message GetBinaryResponse {
+    string keyword = 1;
+    bytes bin = 2;
+    string meta = 3;
+}
+message ListBinaryKeywordsRequest {}
+message ListBinaryKeywordsResponse {
+    repeated string keywords = 1;
+}
+service BinaryKeeper {
+    rpc SaveBinary (SaveBinaryRequest) returns (SaveBinaryResponse) {}
+    rpc GetBinary (GetBinaryRequest) returns (GetBinaryResponse) {}
+    rpc ListBinaryKeywords (ListBinaryKeywordsRequest) returns (ListBinaryKeywordsResponse) {}
+}

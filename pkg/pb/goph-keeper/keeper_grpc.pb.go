@@ -577,3 +577,161 @@ var CardDataKeeper_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "keeper.proto",
 }
+
+// BinaryKeeperClient is the client API for BinaryKeeper service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type BinaryKeeperClient interface {
+	SaveBinary(ctx context.Context, in *SaveBinaryRequest, opts ...grpc.CallOption) (*SaveBinaryResponse, error)
+	GetBinary(ctx context.Context, in *GetBinaryRequest, opts ...grpc.CallOption) (*GetBinaryResponse, error)
+	ListBinaryKeywords(ctx context.Context, in *ListBinaryKeywordsRequest, opts ...grpc.CallOption) (*ListBinaryKeywordsResponse, error)
+}
+
+type binaryKeeperClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewBinaryKeeperClient(cc grpc.ClientConnInterface) BinaryKeeperClient {
+	return &binaryKeeperClient{cc}
+}
+
+func (c *binaryKeeperClient) SaveBinary(ctx context.Context, in *SaveBinaryRequest, opts ...grpc.CallOption) (*SaveBinaryResponse, error) {
+	out := new(SaveBinaryResponse)
+	err := c.cc.Invoke(ctx, "/keeper.BinaryKeeper/SaveBinary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *binaryKeeperClient) GetBinary(ctx context.Context, in *GetBinaryRequest, opts ...grpc.CallOption) (*GetBinaryResponse, error) {
+	out := new(GetBinaryResponse)
+	err := c.cc.Invoke(ctx, "/keeper.BinaryKeeper/GetBinary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *binaryKeeperClient) ListBinaryKeywords(ctx context.Context, in *ListBinaryKeywordsRequest, opts ...grpc.CallOption) (*ListBinaryKeywordsResponse, error) {
+	out := new(ListBinaryKeywordsResponse)
+	err := c.cc.Invoke(ctx, "/keeper.BinaryKeeper/ListBinaryKeywords", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// BinaryKeeperServer is the server API for BinaryKeeper service.
+// All implementations must embed UnimplementedBinaryKeeperServer
+// for forward compatibility
+type BinaryKeeperServer interface {
+	SaveBinary(context.Context, *SaveBinaryRequest) (*SaveBinaryResponse, error)
+	GetBinary(context.Context, *GetBinaryRequest) (*GetBinaryResponse, error)
+	ListBinaryKeywords(context.Context, *ListBinaryKeywordsRequest) (*ListBinaryKeywordsResponse, error)
+	mustEmbedUnimplementedBinaryKeeperServer()
+}
+
+// UnimplementedBinaryKeeperServer must be embedded to have forward compatible implementations.
+type UnimplementedBinaryKeeperServer struct {
+}
+
+func (UnimplementedBinaryKeeperServer) SaveBinary(context.Context, *SaveBinaryRequest) (*SaveBinaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveBinary not implemented")
+}
+func (UnimplementedBinaryKeeperServer) GetBinary(context.Context, *GetBinaryRequest) (*GetBinaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBinary not implemented")
+}
+func (UnimplementedBinaryKeeperServer) ListBinaryKeywords(context.Context, *ListBinaryKeywordsRequest) (*ListBinaryKeywordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBinaryKeywords not implemented")
+}
+func (UnimplementedBinaryKeeperServer) mustEmbedUnimplementedBinaryKeeperServer() {}
+
+// UnsafeBinaryKeeperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BinaryKeeperServer will
+// result in compilation errors.
+type UnsafeBinaryKeeperServer interface {
+	mustEmbedUnimplementedBinaryKeeperServer()
+}
+
+func RegisterBinaryKeeperServer(s grpc.ServiceRegistrar, srv BinaryKeeperServer) {
+	s.RegisterService(&BinaryKeeper_ServiceDesc, srv)
+}
+
+func _BinaryKeeper_SaveBinary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveBinaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BinaryKeeperServer).SaveBinary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.BinaryKeeper/SaveBinary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BinaryKeeperServer).SaveBinary(ctx, req.(*SaveBinaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BinaryKeeper_GetBinary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBinaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BinaryKeeperServer).GetBinary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.BinaryKeeper/GetBinary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BinaryKeeperServer).GetBinary(ctx, req.(*GetBinaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BinaryKeeper_ListBinaryKeywords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBinaryKeywordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BinaryKeeperServer).ListBinaryKeywords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.BinaryKeeper/ListBinaryKeywords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BinaryKeeperServer).ListBinaryKeywords(ctx, req.(*ListBinaryKeywordsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// BinaryKeeper_ServiceDesc is the grpc.ServiceDesc for BinaryKeeper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var BinaryKeeper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "keeper.BinaryKeeper",
+	HandlerType: (*BinaryKeeperServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SaveBinary",
+			Handler:    _BinaryKeeper_SaveBinary_Handler,
+		},
+		{
+			MethodName: "GetBinary",
+			Handler:    _BinaryKeeper_GetBinary_Handler,
+		},
+		{
+			MethodName: "ListBinaryKeywords",
+			Handler:    _BinaryKeeper_ListBinaryKeywords_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "keeper.proto",
+}

@@ -37,6 +37,14 @@ CREATE TABLE keeper.carddata (
     meta TEXT
 );
 
+CREATE TABLE keeper.binary (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES keeper.user(id),
+    keyword VARCHAR(255) NOT NULL,
+    bin BYTEA NOT NULL,
+    meta TEXT
+);
+
 -- +goose Down
 -- +goose StatementBegin
 SELECT 'down SQL query';

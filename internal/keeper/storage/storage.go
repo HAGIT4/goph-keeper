@@ -26,6 +26,10 @@ type KeeperStorageInterface interface {
 	CreateCardData(ctx context.Context, req *CreateCardDataReq) (resp *CreateCardDataResp, err error)
 	ReadCardDataByKeyword(ctx context.Context, req *ReadCardDataByKeywordReq) (resp *ReadCardDataByKeywordResp, err error)
 	ListCardDataKeywords(ctx context.Context, req *ListCardDataKeywordsReq) (resp *ListCardDataKeywordsResp, err error)
+	// BinaryData
+	CreateBinaryData(ctx context.Context, req *CreateBinaryDataReq) (resp *CreateBinaryDataResp, err error)
+	ReadBinaryData(ctx context.Context, req *ReadBinaryDataByKeywordReq) (resp *ReadBinaryDataByKeywordResp, err error)
+	ListBinaryKeywords(ctx context.Context, req *ListBinaryDataKeywordsReq) (resp *ListBinaryDataKeywordsResp, err error)
 }
 
 type User struct {
@@ -222,5 +226,36 @@ type ListCardDataKeywordsReq struct {
 }
 
 type ListCardDataKeywordsResp struct {
+	Keywords []string
+}
+
+type CreateBinaryDataReq struct {
+	ID      uuid.UUID `db:"id"`
+	UserID  uuid.UUID `db:"user_id"`
+	Keyword string    `db:"keyword"`
+	Bin     []byte    `db:"bin"`
+	Meta    string    `db:"meta"`
+}
+
+type CreateBinaryDataResp struct{}
+
+type ReadBinaryDataByKeywordReq struct {
+	UserID  uuid.UUID `db:"user_id"`
+	Keyword string    `db:"keyword"`
+}
+
+type ReadBinaryDataByKeywordResp struct {
+	ID      uuid.UUID `db:"id"`
+	UserID  uuid.UUID `db:"user_id"`
+	Keyword string    `db:"keyword"`
+	Bin     []byte    `db:"bin"`
+	Meta    string    `db:"meta"`
+}
+
+type ListBinaryDataKeywordsReq struct {
+	UserID uuid.UUID `db:"user_id"`
+}
+
+type ListBinaryDataKeywordsResp struct {
 	Keywords []string
 }

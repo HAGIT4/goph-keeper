@@ -265,3 +265,49 @@ func NewErrorNoCardDataFoundForUser(userID uuid.UUID) (err error) {
 		userID: userID,
 	}
 }
+
+type ErrorBinaryNotCreated struct {
+	e error
+}
+
+func (err *ErrorBinaryNotCreated) Error() string {
+	return fmt.Sprintf("storage: binary not created: %s", err.e)
+}
+
+func NewErrorBinaryNotCreated(e error) (err error) {
+	return &ErrorBinaryNotCreated{
+		e: e,
+	}
+}
+
+type ErrorBinaryNotFoundByKeyword struct {
+	keyword string
+	userID  uuid.UUID
+	e       error
+}
+
+func (err *ErrorBinaryNotFoundByKeyword) Error() string {
+	return fmt.Sprintf("storage: binary with keyword %s not found: %s", err.keyword, err.e)
+}
+
+func NewErrorBinaryNotFoundByKeyword(keyword string, userID uuid.UUID, e error) (err error) {
+	return &ErrorBinaryNotFoundByKeyword{
+		keyword: keyword,
+		userID:  userID,
+		e:       e,
+	}
+}
+
+type ErrorNoBinaryFoundForUser struct {
+	userID uuid.UUID
+}
+
+func (err *ErrorNoBinaryFoundForUser) Error() string {
+	return fmt.Sprintf("storage: no binary found for user with ID %s", err.userID)
+}
+
+func NewErrorNoBinaryFoundForUser(userID uuid.UUID) (err error) {
+	return &ErrorNoBinaryFoundForUser{
+		userID: userID,
+	}
+}
