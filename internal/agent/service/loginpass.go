@@ -53,7 +53,7 @@ func (as *agentService) ListLoginPassKeywords(ctx context.Context) (err error) {
 	grpcReq := &pb.ListLoginPassKeywordsRequest{}
 	grpcResp, err := as.agentGRPC.ListLoginPassKeywords(ctx, grpcReq)
 	if err != nil {
-		return nil
+		return err
 	}
 	for _, keyword := range grpcResp.Keywords {
 		fmt.Println(keyword)
@@ -71,7 +71,6 @@ func (as *agentService) GetLoginPass(ctx context.Context) (err error) {
 	}
 	grpcResp, err := as.agentGRPC.GetLoginPass(ctx, grpcReq)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 

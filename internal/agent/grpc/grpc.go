@@ -17,12 +17,17 @@ type AgentGRPCinterface interface {
 
 	SaveTextData(ctx context.Context, req *pb.SaveTextDataRequest) (resp *pb.SaveTextDataResponse, err error)
 	GetTextData(ctx context.Context, req *pb.GetTextDataRequest) (resp *pb.GetTextDataResponse, err error)
+
+	SaveCardData(ctx context.Context, req *pb.SaveCardDataRequest) (resp *pb.SaveCardDataResponse, err error)
+	GetCardData(ctx context.Context, req *pb.GetCardDataRequest) (resp *pb.GetCardDataResponse, err error)
+	ListCardDataKeywords(ctx context.Context, req *pb.ListCardDataKeywordsRequest) (resp *pb.ListCardDataKeywordsResponse, err error)
 }
 
 type agentGRPC struct {
 	authClient      pb.AuthClient
 	loginPassClient pb.LoginPassKeeperClient
 	textdataClient  pb.TextDataKeeperClient
+	cardDataClient  pb.CardDataKeeperClient
 }
 
 type AgentGRPCoption func(ag *agentGRPC)
