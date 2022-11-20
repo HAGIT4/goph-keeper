@@ -17,7 +17,7 @@ CREATE TABLE keeper.loginpass (
     login VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
     meta TEXT,
-)
+);
 
 CREATE TABLE keeper.text (
     id UUID PRIMARY KEY,
@@ -25,7 +25,17 @@ CREATE TABLE keeper.text (
     keyword VARCHAR(255) NOT NULL,
     text TEXT NOT NULL,
     meta TEXT
-)
+);
+
+CREATE TABLE keeper.carddata (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES keeper.user(id),
+    keyword VARCHAR(255) NOT NULL,
+    card_number VARCHAR(255) NOT NULL,
+    card_holder VARCHAR(255) NOT NULL,
+    card_code VARCHAR(255) NOT NULL,
+    meta TEXT
+);
 
 -- +goose Down
 -- +goose StatementBegin

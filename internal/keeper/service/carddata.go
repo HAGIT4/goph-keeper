@@ -11,7 +11,7 @@ import (
 type SaveCardDataReq struct {
 	UserID        uuid.UUID
 	EncKeyword    string
-	EncCardData   string
+	EncCardNumber string
 	EncCardHolder string
 	EncCardCode   string
 	EncMeta       string
@@ -25,7 +25,7 @@ func (ks *keeperService) SaveCardData(ctx context.Context, req *SaveCardDataReq)
 		ID:         uuid.New(),
 		UserID:     req.UserID,
 		Keyword:    req.EncKeyword,
-		CardNumber: req.EncCardData,
+		CardNumber: req.EncCardNumber,
 		CardHolder: req.EncCardHolder,
 		CardCode:   req.EncCardCode,
 		Meta:       req.EncMeta,
