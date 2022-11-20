@@ -17,7 +17,7 @@ func (ps *keeperPostgresStorage) CreateBinaryData(ctx context.Context, req *st.C
 	return resp, nil
 }
 
-func (ps *keeperPostgresStorage) ReadBinaryData(ctx context.Context, req *st.ReadBinaryDataByKeywordReq) (resp *st.ReadBinaryDataByKeywordResp, err error) {
+func (ps *keeperPostgresStorage) ReadBinaryDataByKeyword(ctx context.Context, req *st.ReadBinaryDataByKeywordReq) (resp *st.ReadBinaryDataByKeywordResp, err error) {
 	resp = &st.ReadBinaryDataByKeywordResp{}
 	query := `SELECT * FROM keeper.binary WHERE keyword=$1 AND user_id=$2 LIMIT 1`
 	if err = ps.db.Get(resp, query, req.Keyword, req.UserID); err != nil {

@@ -28,7 +28,7 @@ type KeeperStorageInterface interface {
 	ListCardDataKeywords(ctx context.Context, req *ListCardDataKeywordsReq) (resp *ListCardDataKeywordsResp, err error)
 	// BinaryData
 	CreateBinaryData(ctx context.Context, req *CreateBinaryDataReq) (resp *CreateBinaryDataResp, err error)
-	ReadBinaryData(ctx context.Context, req *ReadBinaryDataByKeywordReq) (resp *ReadBinaryDataByKeywordResp, err error)
+	ReadBinaryDataByKeyword(ctx context.Context, req *ReadBinaryDataByKeywordReq) (resp *ReadBinaryDataByKeywordResp, err error)
 	ListBinaryKeywords(ctx context.Context, req *ListBinaryDataKeywordsReq) (resp *ListBinaryDataKeywordsResp, err error)
 }
 

@@ -29,6 +29,10 @@ type KeeperServiceInterface interface {
 	SaveCardData(ctx context.Context, req *SaveCardDataReq) (resp *SaveCardDataResp, err error)
 	GetCardData(ctx context.Context, req *GetCardDataReq) (resp *GetCardDataResp, err error)
 	ListCardDataKeywords(ctx context.Context, req *ListCardDataKeywordsReq) (resp *ListCardDataKeywordsResp, err error)
+
+	SaveBinary(ctx context.Context, req *SaveBinaryReq) (resp *SaveBinaryResp, err error)
+	GetBinary(ctx context.Context, req *GetBinaryReq) (resp *GetBinaryResp, err error)
+	ListBinaryKeywords(ctx context.Context, req *ListBinaryKeywordsReq) (resp *ListBinaryKeywordsResp, err error)
 }
 
 type keeperService struct {

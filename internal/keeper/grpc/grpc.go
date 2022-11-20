@@ -11,6 +11,7 @@ type serviceGRPC struct {
 	pb.UnimplementedAuthServer
 	pb.UnimplementedLoginPassKeeperServer
 	pb.UnimplementedCardDataKeeperServer
+	pb.UnimplementedBinaryKeeperServer
 	service service.KeeperServiceInterface
 }
 
