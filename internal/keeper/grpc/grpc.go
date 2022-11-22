@@ -10,6 +10,7 @@ type ServerGRPCinterface interface{}
 type serviceGRPC struct {
 	pb.UnimplementedAuthServer
 	pb.UnimplementedLoginPassKeeperServer
+	pb.UnimplementedTextDataKeeperServer
 	pb.UnimplementedCardDataKeeperServer
 	pb.UnimplementedBinaryKeeperServer
 	service service.KeeperServiceInterface

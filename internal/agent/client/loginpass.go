@@ -9,7 +9,7 @@ import (
 func (ac *agentCli) AddLoginPassCmd() {
 	saveLoginPass := &cobra.Command{
 		Use:   "loginpass",
-		Short: "save a loginpass",
+		Short: "save loginpass",
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx := context.Background()
 			_ = ac.service.SaveLoginPass(ctx)

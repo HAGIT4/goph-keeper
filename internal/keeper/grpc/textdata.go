@@ -65,3 +65,24 @@ func (sg *serviceGRPC) GetTextData(ctx context.Context, req *pb.GetTextDataReque
 	}
 	return resp, nil
 }
+
+func (sg *serviceGRPC) ListTextDataKeywords(ctx context.Context, req *pb.ListTextDataKeywordsRequest) (resp *pb.ListTextDataKeywordsResponse, err error) {
+	md, _ := metadata.FromIncomingContext(ctx)
+	token := md["token"][0]
+	payload, err := sg.service.VerifyAuthToken(token)
+	if err != nil {
+		return nil, err
+	}
+	svReq := &sv.ListTextDataKeywordsReq{
+		UserID: payload.UserID,
+	}
+	svResp, err := sg.service.ListTextDataKeywords(ctx, svReq)
+	if err != nil {
+		err = status.Error(codes.Internal, "Internal error")
+		return nil, err
+	}
+	resp = &pb.ListTextDataKeywordsResponse{
+		Keywords: svResp.Keywords,
+	}
+	return resp, nil
+}

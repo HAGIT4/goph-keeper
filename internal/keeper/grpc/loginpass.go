@@ -78,5 +78,4 @@ func (sg *serviceGRPC) ListLoginPassKeywords(ctx context.Context, req *pb.ListLo
 		Keywords: svResp.Keywords,
 	}
 	return resp, nil
-
 }

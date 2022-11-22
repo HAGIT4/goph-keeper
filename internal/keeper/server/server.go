@@ -54,6 +54,8 @@ func NewKeeperServer() (keeper *keeperServer, err error) {
 	pb.RegisterAuthServer(grpcServer, grpcService)
 	pb.RegisterLoginPassKeeperServer(grpcServer, grpcService)
 	pb.RegisterCardDataKeeperServer(grpcServer, grpcService)
+	pb.RegisterBinaryKeeperServer(grpcServer, grpcService)
+	pb.RegisterTextDataKeeperServer(grpcServer, grpcService)
 	reflection.Register(grpcServer)
 
 	keeper = &keeperServer{

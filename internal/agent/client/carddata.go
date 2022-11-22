@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -22,7 +23,9 @@ func (ac *agentCli) AddCardDataCmd() {
 		Short: "Get card data",
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx := context.Background()
-			_ = ac.service.ListCardDataKeywords(ctx)
+			if err := ac.service.GetCardData(ctx); err != nil {
+				fmt.Println(err)
+			}
 		},
 	}
 	ac.getCmd.AddCommand(getCardDataCmd)

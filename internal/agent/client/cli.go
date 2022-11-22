@@ -77,6 +77,9 @@ func WithAgentService(as service.AgentServiceInterface) agentCLIoption {
 func (ac *agentCli) InitCommands() {
 	ac.AddRegisterCommand()
 	ac.AddLoginPassCmd()
+	ac.AddCardDataCmd()
+	ac.AddTextDataCmd()
+	ac.AddBinaryCmd()
 }
 
 func (ac *agentCli) Execute() (err error) {

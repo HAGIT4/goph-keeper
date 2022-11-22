@@ -21,3 +21,11 @@ func (ag *agentGRPC) GetTextData(ctx context.Context, req *pb.GetTextDataRequest
 	}
 	return resp, nil
 }
+
+func (ag *agentGRPC) ListTextDataKeywords(ctx context.Context, req *pb.ListTextDataKeywordsRequest) (resp *pb.ListTextDataKeywordsResponse, err error) {
+	resp, err = ag.textdataClient.ListTextDataKeywords(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

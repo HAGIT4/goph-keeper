@@ -167,7 +167,11 @@ type ReadTextDataByKeywordReq struct {
 }
 
 type ReadTextDataByKeywordResp struct {
-	TextData TextData
+	ID       uuid.UUID `db:"id"`
+	UserID   uuid.UUID `db:"user_id"`
+	Keyword  string    `db:"keyword"`
+	TextData string    `db:"text"`
+	Meta     string    `db:"meta"`
 }
 
 //Update TextData

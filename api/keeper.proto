@@ -81,9 +81,16 @@ message GetTextDataResponse {
     string encMeta = 3;
 }
 
+message ListTextDataKeywordsRequest {}
+
+message ListTextDataKeywordsResponse {
+    repeated string keywords = 1;
+}
+
 service TextDataKeeper {
     rpc SaveTextData (SaveTextDataRequest) returns (SaveTextDataResponse) {}
-    rpc GetTextData (GetTextDataRequest) returns (GetTextDataResponse) {} 
+    rpc GetTextData (GetTextDataRequest) returns (GetTextDataResponse) {}
+    rpc ListTextDataKeywords (ListTextDataKeywordsRequest) returns (ListTextDataKeywordsResponse) {}
 }
 
 

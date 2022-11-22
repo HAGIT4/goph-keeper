@@ -87,9 +87,9 @@ func (ks *keeperService) ReadTextDataByKeyword(ctx context.Context, req *ReadTex
 		return nil, err
 	}
 	resp = &ReadTextDataByKeywordResp{
-		Keyword:  stResp.TextData.Keyword,
-		TextData: stResp.TextData.TextData,
-		Meta:     stResp.TextData.Meta,
+		Keyword:  stResp.Keyword,
+		TextData: stResp.TextData,
+		Meta:     stResp.Meta,
 	}
 	return resp, nil
 }

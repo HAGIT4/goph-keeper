@@ -304,6 +304,7 @@ var LoginPassKeeper_ServiceDesc = grpc.ServiceDesc{
 type TextDataKeeperClient interface {
 	SaveTextData(ctx context.Context, in *SaveTextDataRequest, opts ...grpc.CallOption) (*SaveTextDataResponse, error)
 	GetTextData(ctx context.Context, in *GetTextDataRequest, opts ...grpc.CallOption) (*GetTextDataResponse, error)
+	ListTextDataKeywords(ctx context.Context, in *ListTextDataKeywordsRequest, opts ...grpc.CallOption) (*ListTextDataKeywordsResponse, error)
 }
 
 type textDataKeeperClient struct {
@@ -332,12 +333,22 @@ func (c *textDataKeeperClient) GetTextData(ctx context.Context, in *GetTextDataR
 	return out, nil
 }
 
+func (c *textDataKeeperClient) ListTextDataKeywords(ctx context.Context, in *ListTextDataKeywordsRequest, opts ...grpc.CallOption) (*ListTextDataKeywordsResponse, error) {
+	out := new(ListTextDataKeywordsResponse)
+	err := c.cc.Invoke(ctx, "/keeper.TextDataKeeper/ListTextDataKeywords", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TextDataKeeperServer is the server API for TextDataKeeper service.
 // All implementations must embed UnimplementedTextDataKeeperServer
 // for forward compatibility
 type TextDataKeeperServer interface {
 	SaveTextData(context.Context, *SaveTextDataRequest) (*SaveTextDataResponse, error)
 	GetTextData(context.Context, *GetTextDataRequest) (*GetTextDataResponse, error)
+	ListTextDataKeywords(context.Context, *ListTextDataKeywordsRequest) (*ListTextDataKeywordsResponse, error)
 	mustEmbedUnimplementedTextDataKeeperServer()
 }
 
@@ -350,6 +361,9 @@ func (UnimplementedTextDataKeeperServer) SaveTextData(context.Context, *SaveText
 }
 func (UnimplementedTextDataKeeperServer) GetTextData(context.Context, *GetTextDataRequest) (*GetTextDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTextData not implemented")
+}
+func (UnimplementedTextDataKeeperServer) ListTextDataKeywords(context.Context, *ListTextDataKeywordsRequest) (*ListTextDataKeywordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTextDataKeywords not implemented")
 }
 func (UnimplementedTextDataKeeperServer) mustEmbedUnimplementedTextDataKeeperServer() {}
 
@@ -400,6 +414,24 @@ func _TextDataKeeper_GetTextData_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TextDataKeeper_ListTextDataKeywords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTextDataKeywordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TextDataKeeperServer).ListTextDataKeywords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keeper.TextDataKeeper/ListTextDataKeywords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TextDataKeeperServer).ListTextDataKeywords(ctx, req.(*ListTextDataKeywordsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TextDataKeeper_ServiceDesc is the grpc.ServiceDesc for TextDataKeeper service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -414,6 +446,10 @@ var TextDataKeeper_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTextData",
 			Handler:    _TextDataKeeper_GetTextData_Handler,
+		},
+		{
+			MethodName: "ListTextDataKeywords",
+			Handler:    _TextDataKeeper_ListTextDataKeywords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

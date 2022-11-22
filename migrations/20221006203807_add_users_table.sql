@@ -19,7 +19,7 @@ CREATE TABLE keeper.loginpass (
     meta TEXT,
 );
 
-CREATE TABLE keeper.text (
+CREATE TABLE keeper.textdata (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES keeper.user(id),
     keyword VARCHAR(255) NOT NULL,

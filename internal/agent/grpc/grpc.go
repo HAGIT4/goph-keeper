@@ -17,10 +17,15 @@ type AgentGRPCinterface interface {
 
 	SaveTextData(ctx context.Context, req *pb.SaveTextDataRequest) (resp *pb.SaveTextDataResponse, err error)
 	GetTextData(ctx context.Context, req *pb.GetTextDataRequest) (resp *pb.GetTextDataResponse, err error)
+	ListTextDataKeywords(ctx context.Context, req *pb.ListTextDataKeywordsRequest) (resp *pb.ListTextDataKeywordsResponse, err error)
 
 	SaveCardData(ctx context.Context, req *pb.SaveCardDataRequest) (resp *pb.SaveCardDataResponse, err error)
 	GetCardData(ctx context.Context, req *pb.GetCardDataRequest) (resp *pb.GetCardDataResponse, err error)
 	ListCardDataKeywords(ctx context.Context, req *pb.ListCardDataKeywordsRequest) (resp *pb.ListCardDataKeywordsResponse, err error)
+
+	SaveBinary(ctx context.Context, req *pb.SaveBinaryRequest) (resp *pb.SaveBinaryResponse, err error)
+	GetBinary(ctx context.Context, req *pb.GetBinaryRequest) (resp *pb.GetBinaryResponse, err error)
+	ListBinaryKeywords(ctx context.Context, req *pb.ListBinaryKeywordsRequest) (resp *pb.ListBinaryKeywordsResponse, err error)
 }
 
 type agentGRPC struct {
@@ -28,6 +33,7 @@ type agentGRPC struct {
 	loginPassClient pb.LoginPassKeeperClient
 	textdataClient  pb.TextDataKeeperClient
 	cardDataClient  pb.CardDataKeeperClient
+	binaryClient    pb.BinaryKeeperClient
 }
 
 type AgentGRPCoption func(ag *agentGRPC)
@@ -44,5 +50,8 @@ func WithClientConn(cc grpc.ClientConnInterface) AgentGRPCoption {
 	return func(ag *agentGRPC) {
 		ag.authClient = pb.NewAuthClient(cc)
 		ag.loginPassClient = pb.NewLoginPassKeeperClient(cc)
+		ag.textdataClient = pb.NewTextDataKeeperClient(cc)
+		ag.cardDataClient = pb.NewCardDataKeeperClient(cc)
+		ag.binaryClient = pb.NewBinaryKeeperClient(cc)
 	}
 }
